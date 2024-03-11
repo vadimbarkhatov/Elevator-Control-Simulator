@@ -31,11 +31,9 @@ MainWindow::MainWindow(QWidget *parent)
     for(int floorNumber = 0; floorNumber < numFloors; floorNumber++) {
         QPushButton *upButton = new QPushButton("▲");
         upButton->setFixedSize(floorUISize,floorUISize);
-        //upButtons.append(upButton);
 
         QPushButton *downButton = new QPushButton("▼");
         downButton->setFixedSize(floorUISize,floorUISize);
-        //downButtons.append(downButton);
 
         QVBoxLayout *qVlayout = new QVBoxLayout();
 
@@ -49,32 +47,38 @@ MainWindow::MainWindow(QWidget *parent)
 
         ui->gridLayout->addWidget(containerWidget, numFloors - floorNumber - 1, 0);
 
-        Floor* floor = new Floor(floorNumber);
+        Floor* floor = new Floor(floorNumber, numElevators);
         connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
         building->floors.append(floor);
 
-        connect(upButton, &QPushButton::released, [upButton, floor](){
-            upButton->setStyleSheet(floor->upButton ? "QPushButton {background-color: yellow;}" : "");
+        QString highlightOn = "QPushButton {color: cyan;}";
+
+
+        connect(floor, &Floor::eleRequested, this, [downButton, highlightOn](Floor* floor){
+            downButton->setStyleSheet(floor->downButton ? highlightOn : "");
         });
 
-        connect(downButton, &QPushButton::released, [downButton, floor](){
-            downButton->setStyleSheet(floor->downButton ? "QPushButton {background-color: yellow;}" : "");
+
+        connect(floor, &Floor::eleRequested, this, [downButton, highlightOn](Floor* floor){
+            downButton->setStyleSheet(floor->downButton ? highlightOn : "");
         });
-
-
 
 
         for(int elevator = 0; elevator < numElevators; elevator++) {
-            QLabel *shaftLabel = new QLabel("∥");
-            shaftLabel->setFixedSize(floorUISize*2,floorUISize*2);
-            shaftLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
-            shaftLabel->setLineWidth(1);
-            shaftLabel->setAlignment(Qt::AlignCenter);
-            QFont font = shaftLabel->font();
+            QLabel *doorLabel = new QLabel("∥");
+            doorLabel->setFixedSize(floorUISize*2,floorUISize*2);
+            doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
+            doorLabel->setLineWidth(1);
+            doorLabel->setAlignment(Qt::AlignCenter);
+            QFont font = doorLabel->font();
             font.setPointSize(36);
-            shaftLabel->setFont(font);
-            ui->gridLayout->addWidget(shaftLabel, floorNumber, elevator + 1);
+            doorLabel->setFont(font);
+            ui->gridLayout->addWidget(doorLabel, floorNumber, elevator + 1);
+
+//            connect(doorLabel, &QPushButton::released, [downButton, floor, highlightOn](){
+//                downButton->setStyleSheet(floor->downButton ? highlightOn : "");
+//            });
         }
 
     }

@@ -3,13 +3,14 @@
 
 #include <QObject>
 
+
 class Floor : public QObject
 {
     Q_OBJECT
 
 
 public:
-    explicit Floor(int floorNumber, QObject *parent = nullptr);
+    explicit Floor(int floorNumber, int numDoors, QObject *parent = nullptr);
 
 signals:
     void upButtonChanged();
@@ -23,6 +24,7 @@ public:
     int floorNumber;
     bool upButton;
     bool downButton;
+    QVector<bool> doors;
 
 
 };

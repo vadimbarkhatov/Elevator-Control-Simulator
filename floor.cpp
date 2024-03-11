@@ -1,12 +1,16 @@
 #include "floor.h"
 #include <QLoggingCategory>
 
-Floor::Floor(int floorNumber, QObject *parent)
-    : QObject{parent}
+Floor::Floor(int floorNumber, int numDoors, QObject *parent)
+    : QObject{parent}, doors(numDoors)
 {
     this->floorNumber = floorNumber;
     this->upButton = false;
     this->downButton = false;
+
+    for(int i = 0; i < numDoors; i++) {
+        doors[i] = false;
+    }
 }
 
 
