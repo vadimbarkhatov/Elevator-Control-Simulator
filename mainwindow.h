@@ -25,6 +25,6 @@ private:
 
 private slots:
     void doSomething();
-    void onEleRequest(Floor* floor);
+    //void onEleRequest(Floor* floor);
 };
 #endif // MAINWINDOW_H

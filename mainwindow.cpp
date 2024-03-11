@@ -31,11 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
     for(int floorNumber = 0; floorNumber < numFloors; floorNumber++) {
         QPushButton *upButton = new QPushButton("▲");
         upButton->setFixedSize(floorUISize,floorUISize);
-        upButtons.append(upButton);
+        //upButtons.append(upButton);
 
         QPushButton *downButton = new QPushButton("▼");
         downButton->setFixedSize(floorUISize,floorUISize);
-        downButtons.append(downButton);
+        //downButtons.append(downButton);
 
         QVBoxLayout *qVlayout = new QVBoxLayout();
 
@@ -53,7 +53,16 @@ MainWindow::MainWindow(QWidget *parent)
         connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
         building->floors.append(floor);
-        connect(floor, &Floor::eleRequested, this, &MainWindow::onEleRequest);
+
+        connect(upButton, &QPushButton::released, [upButton, floor](){
+            upButton->setStyleSheet(floor->upButton ? "QPushButton {background-color: yellow;}" : "");
+        });
+
+        connect(downButton, &QPushButton::released, [downButton, floor](){
+            downButton->setStyleSheet(floor->downButton ? "QPushButton {background-color: yellow;}" : "");
+        });
+
+
 
 
         for(int elevator = 0; elevator < numElevators; elevator++) {
@@ -82,23 +91,23 @@ void MainWindow::doSomething()
     qInfo("Hello World!");
 }
 
-void MainWindow::onEleRequest(Floor* floor)
-{
-    //qInfo("Elevator requested");
-    int floorNumber = floor->floorNumber;
+//void MainWindow::onEleRequest(Floor* floor)
+//{
+//    //qInfo("Elevator requested");
+//    int floorNumber = floor->floorNumber;
 
-    qInfo() << QString("Ele requested on floor %1").arg(floorNumber);
+//    qInfo() << QString("Ele requested on floor %1").arg(floorNumber);
 
-    QString highlightOn = "QPushButton {background-color: yellow;}";
-    QString highlightOff = "QPushButton {background-color: gray;}";
+//    QString highlightOn = "QPushButton {background-color: yellow;}";
+//    QString highlightOff = "QPushButton {background-color: gray;}";
 
-    qInfo() << QString("Up button: %1").arg(floor->upButton);
-    qInfo() << QString("Down button: %1").arg(floor->downButton);
+//    qInfo() << QString("Up button: %1").arg(floor->upButton);
+//    qInfo() << QString("Down button: %1").arg(floor->downButton);
 
-    if(floor->upButton) upButtons.at(floorNumber)->setStyleSheet(highlightOn);
-    else upButtons.at(floorNumber)->setStyleSheet("");
+//    if(floor->upButton) upButtons.at(floorNumber)->setStyleSheet(highlightOn);
+//    else upButtons.at(floorNumber)->setStyleSheet("");
 
-    if(floor->downButton) downButtons.at(floor->floorNumber)->setStyleSheet(highlightOn);
-    else downButtons.at(floor->floorNumber)->setStyleSheet("");
+//    if(floor->downButton) downButtons.at(floor->floorNumber)->setStyleSheet(highlightOn);
+//    else downButtons.at(floor->floorNumber)->setStyleSheet("");
 
-}
+//}
