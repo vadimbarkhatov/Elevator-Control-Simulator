@@ -15,6 +15,7 @@ public:
 signals:
     void upButtonChanged();
     void eleRequested(Floor* self);
+    void doorsChanged(Floor* self);
 
 public slots:
     void pressUp();

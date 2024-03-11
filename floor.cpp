@@ -21,6 +21,9 @@ void Floor::pressUp()
 
     upButton = !upButton;
     emit eleRequested(this);
+
+    doors[1] = !doors[1];
+    emit doorsChanged(this);
 }
 
 void Floor::pressDown()
@@ -30,3 +33,5 @@ void Floor::pressDown()
     downButton = !downButton;
     emit eleRequested(this);
 }
+
+

@@ -55,8 +55,8 @@ MainWindow::MainWindow(QWidget *parent)
         QString highlightOn = "QPushButton {color: cyan;}";
 
 
-        connect(floor, &Floor::eleRequested, this, [downButton, highlightOn](Floor* floor){
-            downButton->setStyleSheet(floor->downButton ? highlightOn : "");
+        connect(floor, &Floor::eleRequested, this, [upButton, highlightOn](Floor* floor){
+            upButton->setStyleSheet(floor->upButton ? highlightOn : "");
         });
 
 
@@ -66,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 
         for(int elevator = 0; elevator < numElevators; elevator++) {
-            QLabel *doorLabel = new QLabel("∥");
+            //QLabel *doorLabel = new QLabel("∥");
+            QLabel *doorLabel = new QLabel("||");
             doorLabel->setFixedSize(floorUISize*2,floorUISize*2);
             doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
             doorLabel->setLineWidth(1);
@@ -74,11 +75,12 @@ MainWindow::MainWindow(QWidget *parent)
             QFont font = doorLabel->font();
             font.setPointSize(36);
             doorLabel->setFont(font);
-            ui->gridLayout->addWidget(doorLabel, floorNumber, elevator + 1);
+            ui->gridLayout->addWidget(doorLabel, numFloors - floorNumber - 1, elevator + 1);
 
-//            connect(doorLabel, &QPushButton::released, [downButton, floor, highlightOn](){
-//                downButton->setStyleSheet(floor->downButton ? highlightOn : "");
-//            });
+            connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, elevator](Floor* floor){
+                doorLabel->setText(floor->doors[elevator] ? "| |" : "||");
+            });
+
         }
 
     }
