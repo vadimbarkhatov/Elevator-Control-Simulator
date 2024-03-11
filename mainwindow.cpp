@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "floor.h"
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QVector>
 
 
 
@@ -10,11 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int numFloors = 2;
+    int numFloors = 5;
     int numElevators = 5;
     int floorUISize = 20;
 
-    building = new Building(7, 3);
+    building = new Building(numFloors, numElevators);
 
     connect(ui->pushButton, SIGNAL(released()), this, SLOT(doSomething()));
     connect(ui->fireButton, SIGNAL(released()), building, SLOT(simFire()));
@@ -40,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent)
         containerWidget->setLayout(qVlayout);
 
         ui->gridLayout->addWidget(containerWidget, floor, 0);
+
+        Floor* floorO = new Floor(floor);
+        connect(upButton, SIGNAL(released()), floorO, SLOT(pressUp()));
+        building->floors.append(floorO);
 
 
         for(int elevator = 0; elevator < numElevators; elevator++) {

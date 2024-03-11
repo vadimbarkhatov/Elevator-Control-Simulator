@@ -16,6 +16,7 @@ class Building : public QObject
     Q_OBJECT
 public:
     explicit Building(int floors, int elevators, QObject *parent = nullptr);
+    QVector<Floor*> floors;
 
 signals:
 
@@ -25,7 +26,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    QVector<Floor*> floors;
+
     void initFloors(int numFloors);
 
 };

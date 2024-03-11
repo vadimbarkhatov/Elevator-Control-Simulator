@@ -6,14 +6,19 @@
 class Floor : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool upButton READ upButton WRITE setUpButton NOTIFY upButtonChanged)
+    //Q_PROPERTY(bool upButton READ upButton WRITE setUpButton NOTIFY upButtonChanged)
 
 
 public:
-    explicit Floor(QObject *parent = nullptr);
+    explicit Floor(int floorNumber, QObject *parent = nullptr);
 
 signals:
     void upButtonChanged();
+    void eleRequested();
+
+public slots:
+    void pressUp();
+    //void pressDown();
 
 public:
     int floorNumber;
@@ -26,8 +31,7 @@ public:
 
     bool downButton;
 
-    void pressUp();
-    void pressDown();
+
 
 private:
     bool m_upButton;

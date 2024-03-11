@@ -19,12 +19,12 @@ void Building::simPowerOut()
 
 void Building::initFloors(int numFloors)
 {
-    for(int i = 0; i < numFloors; i++) {
-        Floor* floor = new Floor();
-        floors.append(floor);
+//    for(int i = 0; i < numFloors; i++) {
+//        Floor* floor = new Floor();
+//        floors.append(floor);
 
 
-        qInfo("Created floor!");
+//        qInfo("Created floor!");
 
-    }
+//    }
 }
