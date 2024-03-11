@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "building.h"
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,8 +20,11 @@ public:
 private:
     Ui::MainWindow *ui;
     Building *building;
+    QVector<QPushButton*> upButtons;
+    QVector<QPushButton*> downButtons;
 
 private slots:
     void doSomething();
+    void onEleRequest(Floor* floor);
 };
 #endif // MAINWINDOW_H

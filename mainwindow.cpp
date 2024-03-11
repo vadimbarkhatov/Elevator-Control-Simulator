@@ -4,6 +4,8 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QVector>
+#include <QLoggingCategory>
+#include <string>
 
 
 
@@ -26,11 +28,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
 
-    for(int floor = 0; floor < numFloors; floor++) {
+    for(int floorNumber = 0; floorNumber < numFloors; floorNumber++) {
         QPushButton *upButton = new QPushButton("▲");
         upButton->setFixedSize(floorUISize,floorUISize);
+        upButtons.append(upButton);
+
         QPushButton *downButton = new QPushButton("▼");
         downButton->setFixedSize(floorUISize,floorUISize);
+        downButtons.append(downButton);
+
         QVBoxLayout *qVlayout = new QVBoxLayout();
 
 
@@ -41,11 +47,13 @@ MainWindow::MainWindow(QWidget *parent)
         QWidget *containerWidget = new QWidget();
         containerWidget->setLayout(qVlayout);
 
-        ui->gridLayout->addWidget(containerWidget, floor, 0);
+        ui->gridLayout->addWidget(containerWidget, numFloors - floorNumber - 1, 0);
 
-        Floor* floorO = new Floor(floor);
-        connect(upButton, SIGNAL(released()), floorO, SLOT(pressUp()));
-        building->floors.append(floorO);
+        Floor* floor = new Floor(floorNumber);
+        connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
+        connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
+        building->floors.append(floor);
+        connect(floor, &Floor::eleRequested, this, &MainWindow::onEleRequest);
 
 
         for(int elevator = 0; elevator < numElevators; elevator++) {
@@ -57,18 +65,10 @@ MainWindow::MainWindow(QWidget *parent)
             QFont font = shaftLabel->font();
             font.setPointSize(36);
             shaftLabel->setFont(font);
-            ui->gridLayout->addWidget(shaftLabel, floor, elevator + 1);
+            ui->gridLayout->addWidget(shaftLabel, floorNumber, elevator + 1);
         }
 
     }
-
-
-//    ui->floorButtons->addWidget(button1);
-//    ui->floorButtons->addWidget(button2);
-//    ui->floorButtons->addWidget(button3);
-//    ui->floorButtons->addWidget(button4);
-//    ui->floorButtons->addWidget(button5);
-
 
 }
 
@@ -80,4 +80,25 @@ MainWindow::~MainWindow()
 void MainWindow::doSomething()
 {
     qInfo("Hello World!");
+}
+
+void MainWindow::onEleRequest(Floor* floor)
+{
+    //qInfo("Elevator requested");
+    int floorNumber = floor->floorNumber;
+
+    qInfo() << QString("Ele requested on floor %1").arg(floorNumber);
+
+    QString highlightOn = "QPushButton {background-color: yellow;}";
+    QString highlightOff = "QPushButton {background-color: gray;}";
+
+    qInfo() << QString("Up button: %1").arg(floor->upButton);
+    qInfo() << QString("Down button: %1").arg(floor->downButton);
+
+    if(floor->upButton) upButtons.at(floorNumber)->setStyleSheet(highlightOn);
+    else upButtons.at(floorNumber)->setStyleSheet("");
+
+    if(floor->downButton) downButtons.at(floor->floorNumber)->setStyleSheet(highlightOn);
+    else downButtons.at(floor->floorNumber)->setStyleSheet("");
+
 }
