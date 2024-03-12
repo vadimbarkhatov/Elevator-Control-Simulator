@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int numFloors = 12;
-    int numElevators = 3;
+    int numFloors = 5;
+    int numElevators = 2;
     int floorUISize = 20;
 
     building = new Building(numFloors, numElevators);
@@ -27,21 +27,31 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
 
+    //selEle = building->elevators.at(0);
+    connectToEle(building->elevators.at(0), ui);
+
+
+
+
+
+
     for(int floorNumber = 0; floorNumber < numFloors; floorNumber++) {
-        QPushButton *upButton = new QPushButton("▲");
+        QPushButton* upButton = new QPushButton("▲");
         upButton->setFixedSize(floorUISize,floorUISize);
 
-        QPushButton *downButton = new QPushButton("▼");
+        QPushButton* downButton = new QPushButton("▼");
         downButton->setFixedSize(floorUISize,floorUISize);
 
         QVBoxLayout *qVlayout = new QVBoxLayout();
+
+
 
 
         qVlayout->addWidget(upButton);
         qVlayout->addWidget(downButton);
         qVlayout->setSpacing(0);
 
-        QWidget *containerWidget = new QWidget();
+        QWidget* containerWidget = new QWidget();
         containerWidget->setLayout(qVlayout);
 
         ui->gridLayout->addWidget(containerWidget, numFloors - floorNumber - 1, 0);
@@ -65,17 +75,15 @@ MainWindow::MainWindow(QWidget *parent)
 
         QString floorNumStr = QString("%1").arg(floorNumber);
 
-        QPushButton *eleFloorButton = new QPushButton(QString(floorNumStr));
+        QPushButton* eleFloorButton = new QPushButton(QString(floorNumStr));
         ui->eleButtonLayout->addWidget(eleFloorButton, floorNumber / 2, floorNumber % 2);
-        //upButton->setFixedSize(floorUISize,floorUISize);
 
 
-
-
-
-        for(int elevator = 0; elevator < numElevators; elevator++) {
+        for(int eleNum = 0; eleNum < numElevators; eleNum++) {
             //QLabel *doorLabel = new QLabel("∥");
-            QLabel *doorLabel = new QLabel("||");
+
+
+            QLabel* doorLabel = new QLabel("||");
             doorLabel->setFixedSize(floorUISize*2,floorUISize*2);
             doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
             doorLabel->setLineWidth(1);
@@ -83,13 +91,24 @@ MainWindow::MainWindow(QWidget *parent)
             QFont font = doorLabel->font();
             font.setPointSize(36);
             doorLabel->setFont(font);
-            ui->gridLayout->addWidget(doorLabel, numFloors - floorNumber - 1, elevator + 1);
+            ui->gridLayout->addWidget(doorLabel, numFloors - floorNumber - 1, eleNum + 1);
 
-            connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, elevator](Floor* floor){
-                doorLabel->setText(floor->doors[elevator] ? "| |" : "||");
+            connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, eleNum](Floor* floor){
+                doorLabel->setText(floor->doors[eleNum] ? "| |" : "||");
             });
 
+            if (floorNumber == numFloors - 1) {
+                QPushButton *eleButton = new QPushButton("");
+                //upButton->setFixedSize(floorUISize,floorUISize);
+                ui->gridLayout->addWidget(eleButton, numFloors, eleNum + 1);
+                connect(eleButton, &QPushButton::released, this, [=](){
+                    this->connectToEle(building->elevators.at(eleNum), ui);
+                });
+            }
+
         }
+
+
 
     }
 
@@ -105,9 +124,30 @@ void MainWindow::doSomething()
     qInfo("Hello World!");
 }
 
-void MainWindow::connectToEle(Elevator* ele)
+void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
 {
+    if(selEle != nullptr) {
+        disconnect(selEle, &Elevator::floorSensed, this, nullptr);
+    }
 
+    selEle = ele;
+
+    QLabel* floorLabel = ui->floorNumLabel;
+
+    auto floorUpdateLambda = [=](Elevator* ele){
+        QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
+        floorLabel->setText(floorNumStr);
+    };
+
+    connect(selEle, &Elevator::floorSensed, this, floorUpdateLambda);
+
+
+    QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
+    ui->floorNumLabel->setText(floorNumStr);
+
+    QLabel* eleLabel = ui->eleNumLabel;
+    QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
+    eleLabel->setText(eleNumStr);
 }
 
 //void MainWindow::onEleRequest(Floor* floor)

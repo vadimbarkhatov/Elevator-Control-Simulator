@@ -20,12 +20,13 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
-    Building *building;
+    Ui::MainWindow* ui;
+    Building* building;
     QVector<QPushButton*> upButtons;
     QVector<QPushButton*> downButtons;
+    Elevator* selEle = nullptr;
 
-    void connectToEle(Elevator *ele);
+    void connectToEle(Elevator *ele, Ui::MainWindow* ui);
 private slots:
     void doSomething();
     //void onEleRequest(Floor* floor);
