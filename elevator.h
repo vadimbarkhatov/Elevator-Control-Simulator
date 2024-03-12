@@ -34,6 +34,10 @@ public:
 private:
     float speed = 0.1f;
 
+signals:
+    void floorSensed(Elevator*, int);
+    //void floorSensed(Elevator*);
+
 
 public:
     void update();

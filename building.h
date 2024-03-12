@@ -5,6 +5,7 @@
 #include <QVector>
 #include <floor.h>
 #include <elevator.h>
+#include <ecs.h>
 
 #include <QMainWindow>
 
@@ -25,14 +26,16 @@ signals:
 public slots:
     void simFire();
     void simPowerOut();
+    void eleArrived(Elevator*, int floorNum);
 
 private slots:
     void update();
 
 private:
-    Ui::MainWindow *ui;
+    //Ui::MainWindow *ui;
 
     void initFloors(int numFloors);
+
 
 };
 

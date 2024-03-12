@@ -4,10 +4,12 @@
 Building::Building(int numFloors, int numElevators, QObject *parent)
     : QObject{parent}
 {
-    initFloors(numFloors);
+    //initFloors(numFloors);
 
     for(int i = 0; i < numElevators; i++) {
-        elevators.append(new Elevator());
+        Elevator* ele = new Elevator();
+        elevators.append(ele);
+        connect(ele, &Elevator::floorSensed, this, &Building::eleArrived);
     }
 
     QTimer *timer = new QTimer(this);
@@ -16,7 +18,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
 
     timer->start();
 
-    elevators[2]->moveToFloor(2);
+    elevators[2]->moveToFloor(1);
 
 }
 
@@ -25,14 +27,20 @@ void Building::simFire()
     qInfo("Fire!");
 }
 
+void Building::eleArrived(Elevator*,int floorNum)
+{
+    qInfo("Ele arrived");
+    floors[floorNum]->setDoor(true, 2);
+}
+
 
 void Building::simPowerOut()
 {
     qInfo("Power is out.");
 }
 
-void Building::initFloors(int numFloors)
-{
+//void Building::initFloors(int numFloors)
+//{
 //    for(int i = 0; i < numFloors; i++) {
 //        Floor* floor = new Floor();
 //        floors.append(floor);
@@ -41,12 +49,10 @@ void Building::initFloors(int numFloors)
 //        qInfo("Created floor!");
 
 //    }
-}
+//}
 
 void Building::update()
 {
-    qInfo("lol");
-
     for(Elevator* ele : elevators)
     {
         ele->update();

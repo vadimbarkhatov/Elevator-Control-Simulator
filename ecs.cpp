@@ -5,3 +5,13 @@ ECS::ECS(QObject *parent)
 {
 
 }
+
+void ECS::onEleRequest(Floor *)
+{
+
+}
+
+void ECS::onFloorSensed(Elevator *, int)
+{
+
+}

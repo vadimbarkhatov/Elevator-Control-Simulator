@@ -20,10 +20,10 @@ void Floor::pressUp()
     qInfo() << QString("Up Press on floor %1").arg(floorNumber);
 
     upButton = !upButton;
-    emit eleRequested(this);
+    emit eleRequested(this, "up");
 
-    doors[1] = !doors[1];
-    emit doorsChanged(this);
+    //doors[1] = !doors[1];
+    //emit doorsChanged(this);
 }
 
 void Floor::pressDown()
@@ -31,7 +31,13 @@ void Floor::pressDown()
     //qInfo("Up Press! on floor ");
     qInfo() << QString("Down Press on floor %1").arg(floorNumber);
     downButton = !downButton;
-    emit eleRequested(this);
+    emit eleRequested(this, "down");
+}
+
+void Floor::setDoor(bool state, int doorNum)
+{
+    doors[doorNum] = state;
+    emit doorsChanged(this);
 }
 
 

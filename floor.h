@@ -2,6 +2,7 @@
 #define FLOOR_H
 
 #include <QObject>
+#include <elevator.h>
 
 
 class Floor : public QObject
@@ -14,7 +15,8 @@ public:
 
 signals:
     void upButtonChanged();
-    void eleRequested(Floor* self);
+    void eleRequested(Floor* self, std::string direction);
+    //void eleRequested(Floor* self);
     void doorsChanged(Floor* self);
 
 public slots:
@@ -26,7 +28,10 @@ public:
     bool upButton;
     bool downButton;
     QVector<bool> doors;
+    void eleArrived(Elevator*, int floorNum);
 
+
+    void setDoor(bool state, int doorNum);
 
 };
 
