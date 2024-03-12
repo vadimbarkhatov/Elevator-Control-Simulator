@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     building = new Building(numFloors, numElevators);
 
-    connect(ui->pushButton, SIGNAL(released()), this, SLOT(doSomething()));
+    //connect(ui->pushButton, SIGNAL(released()), this, SLOT(doSomething()));
     connect(ui->fireButton, SIGNAL(released()), building, SLOT(simFire()));
     connect(ui->powerButton, SIGNAL(released()), building, SLOT(simPowerOut()));
 
@@ -30,13 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connectToEle(building->elevators.at(0), ui);
 
-
-    for(Elevator* ele : building->elevators) {
-        connect(ele, &Elevator::floorSensed, this, [this]() {
-            this->onFloorSelected(-1);
-        });
-
-    }
 
 
 
@@ -102,21 +95,42 @@ MainWindow::MainWindow(QWidget *parent)
                 doorLabel->setText(floor->doors[eleNum] ? "| |" : "||");
             });
 
-            if (floorNum == numFloors - 1) {
-                QPushButton *eleButton = new QPushButton("");
-                //upButton->setFixedSize(floorUISize,floorUISize);
-                ui->gridLayout->addWidget(eleButton, numFloors, eleNum + 1);
-                connect(eleButton, &QPushButton::released, this, [=](){
-                    this->connectToEle(building->elevators.at(eleNum), ui);
-                });
-
-            }
-
         }
 
-
-
     }
+
+    for(Elevator* ele : building->elevators) {
+        //TODO: fix, why is is it floorSensed?
+        connect(ele, &Elevator::floorSensed, this, [this]() {
+            this->onFloorSelected(-1);
+        });
+
+
+        QPushButton *eleButton = new QPushButton("");
+
+
+        eleButton->setStyleSheet("QPushButton {"
+                                 "border: 3px solid yellow;"
+                                 "background-color: transparent; }"
+                                 "QPushButton:hover {"
+                                 "background-color: rgba(255,255, 0, 64); }"
+
+                                 );
+
+        ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
+
+        connect(eleButton, &QPushButton::released, this, [this, ele](){
+            this->connectToEle(ele, ui);
+        });
+
+        connect(ele, &Elevator::floorSensed, eleButton, [ele, eleButton, this](){
+            ui->gridLayout->removeWidget(eleButton);
+            ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
+        });
+
+        eleButton->setFixedSize(floorUISize * 2,floorUISize * 2);
+    }
+
 
 }
 

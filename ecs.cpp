@@ -51,33 +51,14 @@ void ECS::onCloseDoors(Elevator* ele, int floorNum)
             ele->state = ele->Idle;
         }
     }
-
-    //if(ele->floorButtons)
 }
 
 void ECS::onFloorSensed(Elevator* ele, int floorNum)
 {
     qInfo() << QString("Got signal that ele arrived at %1").arg(floorNum);
 
-//    if(ele->targetFloor == floorNum) {
-
-//        if(ele->state == ele->MovingUp) {
-//            floors[floorNum]->unselectUp();
-//        }
-//        else if(ele->state == ele->MovingDown) {
-//            floors[floorNum]->unselectDown();
-//        }
-
-//        ele->stop();
-//        ele->openDoors(5);
-
-//        floors[floorNum]->setDoor(true, ele->eleNum);
-//    }
 
     if(ele->floorButtons[floorNum]) {
-//        ele->stop();
-//        ele->openDoors(5);
-//        floors[floorNum]->setDoor(true, ele->eleNum);
         stopElevator(ele);
     }
 
