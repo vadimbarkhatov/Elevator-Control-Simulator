@@ -8,13 +8,14 @@ class Elevator : public QObject
 {
     Q_OBJECT
 public:
-    explicit Elevator(int eleNum, QObject *parent = nullptr);
+    explicit Elevator(int eleNum, int numFloors, QObject *parent = nullptr);
     enum EleState {Idle, WaitDoorOpen, WaitDoorClosed, MovingUp, MovingDown};
     EleState state = Idle;
-//    + floorButtons: bool []
+
     float position = 0.0f;
     int targetFloor = 0;
     int eleNum = 0;
+    QVector<bool> floorButtons;
 //    + targetFloor: int
 //    + display: string
 //    + floorSensed: signal<void (Elevator*, int)>
@@ -67,6 +68,7 @@ public:
     int stop();
     void openDoors(float time);
     void closeDoors();
+    void selectFloor(int floorNum);
     int getFloorNum();
 signals:
 

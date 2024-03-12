@@ -3,10 +3,14 @@
 #include <QDebug>
 
 
-Elevator::Elevator(int eleNum, QObject *parent)
+Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
     : QObject{parent}, eleNum(eleNum)
 {
     state = Idle;
+
+    for(int i = 0; i < numFloors; i++) {
+        floorButtons.append(false);
+    }
 }
 
 
@@ -55,6 +59,11 @@ void Elevator::closeDoors()
 {
     state = WaitDoorClosed;
     emit doorsClosed(this, getFloorNum());
+}
+
+void Elevator::selectFloor(int floorNum)
+{
+    floorButtons.replace(floorNum, true);
 }
 
 bool Elevator::moveToFloor(int floorNum)

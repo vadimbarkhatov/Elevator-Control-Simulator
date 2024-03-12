@@ -134,7 +134,7 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
 
     QLabel* floorLabel = ui->floorNumLabel;
 
-    auto floorUpdateLambda = [=](Elevator* ele){
+    auto floorUpdateLambda = [=](){
         QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
         floorLabel->setText(floorNumStr);
     };
@@ -150,23 +150,4 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
     eleLabel->setText(eleNumStr);
 }
 
-//void MainWindow::onEleRequest(Floor* floor)
-//{
-//    //qInfo("Elevator requested");
-//    int floorNumber = floor->floorNumber;
 
-//    qInfo() << QString("Ele requested on floor %1").arg(floorNumber);
-
-//    QString highlightOn = "QPushButton {background-color: yellow;}";
-//    QString highlightOff = "QPushButton {background-color: gray;}";
-
-//    qInfo() << QString("Up button: %1").arg(floor->upButton);
-//    qInfo() << QString("Down button: %1").arg(floor->downButton);
-
-//    if(floor->upButton) upButtons.at(floorNumber)->setStyleSheet(highlightOn);
-//    else upButtons.at(floorNumber)->setStyleSheet("");
-
-//    if(floor->downButton) downButtons.at(floor->floorNumber)->setStyleSheet(highlightOn);
-//    else downButtons.at(floor->floorNumber)->setStyleSheet("");
-
-//}

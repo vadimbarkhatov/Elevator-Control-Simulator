@@ -9,7 +9,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
 
 
     for(int i = 0; i < numElevators; i++) {
-        Elevator* ele = new Elevator(i);
+        Elevator* ele = new Elevator(i, numFloors);
         elevators.append(ele);
         //connect(ele, &Elevator::floorSensed, this, &Building::eleArrived);
         connect(ele, &Elevator::floorSensed, ecs, &ECS::onFloorSensed);
