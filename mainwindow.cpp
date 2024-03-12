@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "floor.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QVector>
@@ -14,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    int numFloors = 7;
+    int numFloors = 12;
     int numElevators = 3;
     int floorUISize = 20;
 
@@ -64,6 +63,16 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
 
+        QString floorNumStr = QString("%1").arg(floorNumber);
+
+        QPushButton *eleFloorButton = new QPushButton(QString(floorNumStr));
+        ui->eleButtonLayout->addWidget(eleFloorButton, floorNumber / 2, floorNumber % 2);
+        //upButton->setFixedSize(floorUISize,floorUISize);
+
+
+
+
+
         for(int elevator = 0; elevator < numElevators; elevator++) {
             //QLabel *doorLabel = new QLabel("∥");
             QLabel *doorLabel = new QLabel("||");
@@ -94,6 +103,11 @@ MainWindow::~MainWindow()
 void MainWindow::doSomething()
 {
     qInfo("Hello World!");
+}
+
+void MainWindow::connectToEle(Elevator* ele)
+{
+
 }
 
 //void MainWindow::onEleRequest(Floor* floor)

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "building.h"
+#include "elevator.h"
+#include "floor.h"
 #include <QPushButton>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +25,7 @@ private:
     QVector<QPushButton*> upButtons;
     QVector<QPushButton*> downButtons;
 
+    void connectToEle(Elevator *ele);
 private slots:
     void doSomething();
     //void onEleRequest(Floor* floor);

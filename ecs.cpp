@@ -23,7 +23,10 @@ void ECS::onEleRequest(Floor* floor, std::string direction)
      }
 }
 
-
+void ECS::onCloseDoors(Elevator* ele, int floorNum)
+{
+    floors[floorNum]->setDoor(false, ele->eleNum);
+}
 
 void ECS::onFloorSensed(Elevator* ele, int floorNum)
 {
@@ -39,6 +42,7 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
         }
 
         ele->stop();
+        ele->openDoors(5);
 
         floors[floorNum]->setDoor(true, ele->eleNum);
     }

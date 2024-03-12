@@ -35,9 +35,11 @@ public:
 
 private:
     float speed = 0.2f;
+    float doorOpenTime = 0.0f;
 
 signals:
     void floorSensed(Elevator*, int);
+    void doorsClosed(Elevator*, int);
     //void floorSensed(Elevator*);
 
 
@@ -63,6 +65,9 @@ public:
 
 
     int stop();
+    void openDoors(float time);
+    void closeDoors();
+    int getFloorNum();
 signals:
 
 };

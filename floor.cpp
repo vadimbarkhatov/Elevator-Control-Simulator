@@ -22,7 +22,6 @@ void Floor::pressUp()
 }
 
 
-
 void Floor::pressDown()
 {
     qInfo() << QString("Down Press on floor %1").arg(floorNumber);
