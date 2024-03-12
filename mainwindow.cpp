@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 
-    for(int floorNumber = 0; floorNumber < numFloors; floorNumber++) {
+    for(int floorNum = 0; floorNum < numFloors; floorNum++) {
         QPushButton* upButton = new QPushButton("▲");
         upButton->setFixedSize(floorUISize,floorUISize);
 
@@ -59,9 +59,9 @@ MainWindow::MainWindow(QWidget *parent)
         QWidget* containerWidget = new QWidget();
         containerWidget->setLayout(qVlayout);
 
-        ui->gridLayout->addWidget(containerWidget, numFloors - floorNumber - 1, 0);
+        ui->gridLayout->addWidget(containerWidget, numFloors - floorNum - 1, 0);
 
-        Floor* floor = building->floors.at(floorNumber);
+        Floor* floor = building->floors.at(floorNum);
         connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
 
@@ -77,17 +77,12 @@ MainWindow::MainWindow(QWidget *parent)
             downButton->setStyleSheet(floor->downButton ? highlightOn : "");
         });
 
-
-
-
-
-
-        QString floorNumStr = QString("%1").arg(floorNumber);
+        QString floorNumStr = QString("%1").arg(floorNum);
 
         QPushButton* eleFloorButton = new QPushButton(QString(floorNumStr));
-        ui->eleButtonLayout->addWidget(eleFloorButton, floorNumber / 2, floorNumber % 2);
-        connect(eleFloorButton, &QPushButton::released, this, [this, floorNumber]() {
-            this->onFloorSelected(floorNumber);
+        ui->eleButtonLayout->addWidget(eleFloorButton, floorNum / 2, floorNum % 2);
+        connect(eleFloorButton, &QPushButton::released, this, [this, floorNum]() {
+            this->onFloorSelected(floorNum);
         });
 
 
@@ -103,13 +98,13 @@ MainWindow::MainWindow(QWidget *parent)
             QFont font = doorLabel->font();
             font.setPointSize(36);
             doorLabel->setFont(font);
-            ui->gridLayout->addWidget(doorLabel, numFloors - floorNumber - 1, eleNum + 1);
+            ui->gridLayout->addWidget(doorLabel, numFloors - floorNum - 1, eleNum + 1);
 
             connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, eleNum](Floor* floor){
                 doorLabel->setText(floor->doors[eleNum] ? "| |" : "||");
             });
 
-            if (floorNumber == numFloors - 1) {
+            if (floorNum == numFloors - 1) {
                 QPushButton *eleButton = new QPushButton("");
                 //upButton->setFixedSize(floorUISize,floorUISize);
                 ui->gridLayout->addWidget(eleButton, numFloors, eleNum + 1);
@@ -133,12 +128,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::doSomething()
 {
-    qInfo("Hello World!");
+    qInfo("Doing something!");
 }
 
 void MainWindow::onFloorSelected(int floorNum)
 {
-    qInfo("Hello World!");
     if(floorNum >= 0)
         selEle->selectFloor(floorNum);
 
