@@ -187,13 +187,19 @@
      <rect>
       <x>510</x>
       <y>30</y>
-      <width>261</width>
+      <width>168</width>
       <height>321</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="1" column="1" colspan="2">
       <widget class="QLabel" name="floorNumLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Floor: </string>
        </property>
@@ -202,19 +208,25 @@
      <item row="4" column="1">
       <widget class="QPushButton" name="pushButton_4">
        <property name="text">
-        <string>&lt;|&gt;</string>
+        <string>◀|▶</string>
        </property>
       </widget>
      </item>
      <item row="4" column="2">
       <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>&gt;|&lt;</string>
+        <string>▶|◀</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1" colspan="2">
       <widget class="QLabel" name="label_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>ELEVATOR PANEL</string>
        </property>
@@ -229,6 +241,12 @@
      </item>
      <item row="2" column="1" colspan="2">
       <widget class="QLabel" name="eleNumLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Elevator:</string>
        </property>

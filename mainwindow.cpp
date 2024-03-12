@@ -28,16 +28,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->setHorizontalSpacing(10);
 
 
-
-
     connectToEle(building->elevators.at(0), ui);
 
 
-    for(Elevator* ele : building->elevators)
-    {
+    for(Elevator* ele : building->elevators) {
         connect(ele, &Elevator::floorSensed, this, [this]() {
             this->onFloorSelected(-1);
         });
+
     }
 
 
@@ -49,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
         QPushButton* downButton = new QPushButton("▼");
         downButton->setFixedSize(floorUISize,floorUISize);
 
-        QVBoxLayout *qVlayout = new QVBoxLayout();
+        QVBoxLayout* qVlayout = new QVBoxLayout();
 
 
         qVlayout->addWidget(upButton);
@@ -111,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent)
                 connect(eleButton, &QPushButton::released, this, [=](){
                     this->connectToEle(building->elevators.at(eleNum), ui);
                 });
+
             }
 
         }

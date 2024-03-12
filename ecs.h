@@ -27,11 +27,14 @@ public:
 //    + onEleFire(Elevator*): void
 //    + onEleOverload(Elevator*): void
 //    + onHelpRequest(Elevator*): void
+private:
+    void stopElevator(Elevator *ele);
 
 public slots:
     void onEleRequest(Floor* floor, std::string direction);
     void onFloorSensed(Elevator*, int);
     void onCloseDoors(Elevator *ele, int floorNum);
+
 
 signals:
 

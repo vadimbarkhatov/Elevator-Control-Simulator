@@ -45,7 +45,6 @@ void Elevator::update()
         }
     }
 
-    //if(targetFloor )
 }
 
 void Elevator::openDoors(float time)
@@ -64,6 +63,7 @@ void Elevator::closeDoors()
 void Elevator::selectFloor(int floorNum)
 {
     floorButtons.replace(floorNum, true);
+    emit floorSelect(this);
 }
 
 bool Elevator::moveToFloor(int floorNum)

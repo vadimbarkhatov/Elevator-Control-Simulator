@@ -7,6 +7,13 @@ ECS::ECS(QObject *parent)
 
 }
 
+void ECS::stopElevator(Elevator *ele)
+{
+    ele->stop();
+    ele->openDoors(5);
+    floors[ele->getFloorNum()]->setDoor(true, ele->eleNum);
+}
+
 void ECS::onEleRequest(Floor* floor, std::string direction)
 {
     qInfo() << QString("Elevator request at %1").arg(floor->floorNumber);
@@ -15,36 +22,76 @@ void ECS::onEleRequest(Floor* floor, std::string direction)
     if(direction == "down" || direction == "up"){
         for(Elevator* ele : elevators) {
             //ele->update();
+
+//            if(direction == "up" && ele->MovingUp && ele->getFloorNum() < floor->floorNumber) {
+
+//            }
             if(ele->state == ele->Idle) {
                 ele->moveToFloor(floor->floorNumber);
                 break;
             }
         }
      }
+
+
 }
 
 void ECS::onCloseDoors(Elevator* ele, int floorNum)
 {
     floors[floorNum]->setDoor(false, ele->eleNum);
+
+    for(int i = 0; i < ele->floorButtons.count(); i++) {
+
+        if(ele->floorButtons[i]) {
+            ele->moveToFloor(i);
+            break;
+        }
+
+        if(i == ele->floorButtons.count() - 1) {
+            ele->state = ele->Idle;
+        }
+    }
+
+    //if(ele->floorButtons)
 }
 
 void ECS::onFloorSensed(Elevator* ele, int floorNum)
 {
     qInfo() << QString("Got signal that ele arrived at %1").arg(floorNum);
 
-    if(ele->targetFloor == floorNum) {
+//    if(ele->targetFloor == floorNum) {
 
-        if(ele->state == ele->MovingUp) {
-            floors[floorNum]->unselectUp();
-        }
-        else if(ele->state == ele->MovingDown) {
-            floors[floorNum]->unselectDown();
-        }
+//        if(ele->state == ele->MovingUp) {
+//            floors[floorNum]->unselectUp();
+//        }
+//        else if(ele->state == ele->MovingDown) {
+//            floors[floorNum]->unselectDown();
+//        }
 
-        ele->stop();
-        ele->openDoors(5);
+//        ele->stop();
+//        ele->openDoors(5);
 
-        floors[floorNum]->setDoor(true, ele->eleNum);
+//        floors[floorNum]->setDoor(true, ele->eleNum);
+//    }
+
+    if(ele->floorButtons[floorNum]) {
+//        ele->stop();
+//        ele->openDoors(5);
+//        floors[floorNum]->setDoor(true, ele->eleNum);
+        stopElevator(ele);
     }
 
+    if(floors[floorNum]->upButton && ele->MovingUp) {
+        floors[floorNum]->unselectUp();
+
+        stopElevator(ele);
+    }
+    else if(floors[floorNum]->downButton && ele->MovingDown) {
+        floors[floorNum]->unselectDown();
+
+        stopElevator(ele);
+    }
+//    else if() {
+
+//    }
 }

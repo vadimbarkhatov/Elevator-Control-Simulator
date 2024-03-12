@@ -41,7 +41,8 @@ private:
 signals:
     void floorSensed(Elevator*, int);
     void doorsClosed(Elevator*, int);
-    //void floorSensed(Elevator*);
+    void floorSelect(Elevator*);
+    void eleMoved(Elevator*);
 
 
 public:
