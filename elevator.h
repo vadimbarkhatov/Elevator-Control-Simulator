@@ -34,7 +34,7 @@ public:
 //    - loadWeight: float
 
 private:
-    float speed = 0.1f;
+    float speed = 0.2f;
 
 signals:
     void floorSensed(Elevator*, int);

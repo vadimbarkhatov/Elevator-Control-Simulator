@@ -29,7 +29,7 @@ public:
 //    + onHelpRequest(Elevator*): void
 
 public slots:
-    void onEleRequest(Floor*);
+    void onEleRequest(Floor* floor, std::string direction);
     void onFloorSensed(Elevator*, int);
 
 signals:

@@ -4,8 +4,9 @@
 Building::Building(int numFloors, int numElevators, QObject *parent)
     : QObject{parent}
 {
-    initFloors(numFloors, numElevators);
     ecs = new ECS();
+    initFloors(numFloors, numElevators);
+
 
     for(int i = 0; i < numElevators; i++) {
         Elevator* ele = new Elevator(i);
@@ -23,9 +24,9 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
 
     timer->start();
 
-    elevators[2]->moveToFloor(2);
-    elevators[1]->moveToFloor(4);
-    elevators[0]->moveToFloor(6);
+//    elevators[2]->moveToFloor(2);
+//    elevators[1]->moveToFloor(4);
+//    elevators[0]->moveToFloor(6);
 }
 
 void Building::simFire()
@@ -51,7 +52,7 @@ void Building::initFloors(int numFloors, int numElevators)
         Floor* floor = new Floor(i, numElevators);
         floors.append(floor);
 
-
+        connect(floor, &Floor::eleRequested, ecs, &ECS::onEleRequest);
         qInfo("Created floor!");
 
     }
