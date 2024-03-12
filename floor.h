@@ -10,6 +10,7 @@ class Floor : public QObject
     Q_OBJECT
 
 
+
 public:
     explicit Floor(int floorNumber, int numDoors, QObject *parent = nullptr);
 
@@ -33,6 +34,8 @@ public:
 
     void setDoor(bool state, int doorNum);
 
+    void unselectUp();
+    void unselectDown();
 };
 
 #endif // FLOOR_H

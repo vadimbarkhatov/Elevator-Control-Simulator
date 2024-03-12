@@ -9,7 +9,7 @@ class Elevator : public QObject
     Q_OBJECT
 public:
     explicit Elevator(int eleNum, QObject *parent = nullptr);
-    enum EleState {Idle, Waiting, MovingUp, MovingDown};
+    enum EleState {Idle, WaitDoorOpen, WaitDoorClosed, MovingUp, MovingDown};
     EleState state = Idle;
 //    + floorButtons: bool []
     float position = 0.0f;
