@@ -27,11 +27,18 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
 
-    //selEle = building->elevators.at(0);
+
+
+
     connectToEle(building->elevators.at(0), ui);
 
 
-
+    for(Elevator* ele : building->elevators)
+    {
+        connect(ele, &Elevator::floorSensed, this, [this]() {
+            this->onFloorSelected(-1);
+        });
+    }
 
 
 
@@ -43,8 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
         downButton->setFixedSize(floorUISize,floorUISize);
 
         QVBoxLayout *qVlayout = new QVBoxLayout();
-
-
 
 
         qVlayout->addWidget(upButton);
@@ -73,10 +78,17 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
 
+
+
+
+
         QString floorNumStr = QString("%1").arg(floorNumber);
 
         QPushButton* eleFloorButton = new QPushButton(QString(floorNumStr));
         ui->eleButtonLayout->addWidget(eleFloorButton, floorNumber / 2, floorNumber % 2);
+        connect(eleFloorButton, &QPushButton::released, this, [this, floorNumber]() {
+            this->onFloorSelected(floorNumber);
+        });
 
 
         for(int eleNum = 0; eleNum < numElevators; eleNum++) {
@@ -124,6 +136,25 @@ void MainWindow::doSomething()
     qInfo("Hello World!");
 }
 
+void MainWindow::onFloorSelected(int floorNum)
+{
+    qInfo("Hello World!");
+    if(floorNum >= 0)
+        selEle->selectFloor(floorNum);
+
+    for(int i = 0; i < ui->eleButtonLayout->count(); i++) {
+        QString highlightOn = "QPushButton {color: cyan;}";
+        QLayoutItem* item = ui->eleButtonLayout->itemAt(i);
+        if(item->widget()) {
+           if(selEle->floorButtons.at(i))
+               item->widget()->setStyleSheet(highlightOn);
+           else
+               item->widget()->setStyleSheet("");
+        }
+
+    }
+}
+
 void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
 {
     if(selEle != nullptr) {
@@ -148,6 +179,8 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
     QLabel* eleLabel = ui->eleNumLabel;
     QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
     eleLabel->setText(eleNumStr);
+
+    onFloorSelected(-1);
 }
 
 

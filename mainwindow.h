@@ -29,6 +29,6 @@ private:
     void connectToEle(Elevator *ele, Ui::MainWindow* ui);
 private slots:
     void doSomething();
-    //void onEleRequest(Floor* floor);
+    void onFloorSelected(int);
 };
 #endif // MAINWINDOW_H
