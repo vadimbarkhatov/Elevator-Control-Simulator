@@ -11,9 +11,11 @@ public:
     explicit ECS(QObject *parent = nullptr);
 
 
-private:
+public:
 //    - buildingFire: bool
 //    - powerOutage: bool
+    QVector<Elevator*> elevators;
+    QVector<Floor*> floors;
 
 public:
 //    + buildingFire(): void

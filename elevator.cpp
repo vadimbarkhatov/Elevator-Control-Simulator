@@ -3,8 +3,8 @@
 #include <QDebug>
 
 
-Elevator::Elevator(QObject *parent)
-    : QObject{parent}
+Elevator::Elevator(int eleNum, QObject *parent)
+    : QObject{parent}, eleNum(eleNum)
 {
     state = Idle;
 }
@@ -41,8 +41,16 @@ bool Elevator::moveToFloor(int floorNum)
         state = MovingUp;
     }
 
-
-
     return true;
+}
+
+
+int Elevator::stop()
+{
+    state = Idle;
+
+    position = std::round(position);
+
+    return static_cast<int>(position);
 }
 

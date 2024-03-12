@@ -33,8 +33,8 @@ private slots:
 
 private:
     //Ui::MainWindow *ui;
-
-    void initFloors(int numFloors);
+    ECS* ecs;
+    void initFloors(int numFloors, int numElevators);
 
 
 };

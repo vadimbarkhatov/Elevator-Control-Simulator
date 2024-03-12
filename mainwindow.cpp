@@ -47,10 +47,9 @@ MainWindow::MainWindow(QWidget *parent)
 
         ui->gridLayout->addWidget(containerWidget, numFloors - floorNumber - 1, 0);
 
-        Floor* floor = new Floor(floorNumber, numElevators);
+        Floor* floor = building->floors.at(floorNumber);
         connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
-        building->floors.append(floor);
 
         QString highlightOn = "QPushButton {color: cyan;}";
 

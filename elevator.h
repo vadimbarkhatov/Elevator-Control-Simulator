@@ -2,17 +2,19 @@
 #define ELEVATOR_H
 
 #include <QObject>
+//#include <floor.h>
 
 class Elevator : public QObject
 {
     Q_OBJECT
 public:
-    explicit Elevator(QObject *parent = nullptr);
+    explicit Elevator(int eleNum, QObject *parent = nullptr);
     enum EleState {Idle, Waiting, MovingUp, MovingDown};
     EleState state = Idle;
 //    + floorButtons: bool []
     float position = 0.0f;
     int targetFloor = 0;
+    int eleNum = 0;
 //    + targetFloor: int
 //    + display: string
 //    + floorSensed: signal<void (Elevator*, int)>
@@ -60,6 +62,7 @@ public:
 
 
 
+    int stop();
 signals:
 
 };
