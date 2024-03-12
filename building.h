@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <floor.h>
+#include <elevator.h>
 
 #include <QMainWindow>
 
@@ -17,12 +18,16 @@ class Building : public QObject
 public:
     explicit Building(int floors, int elevators, QObject *parent = nullptr);
     QVector<Floor*> floors;
+    QVector<Elevator*> elevators;
 
 signals:
 
 public slots:
     void simFire();
     void simPowerOut();
+
+private slots:
+    void update();
 
 private:
     Ui::MainWindow *ui;
