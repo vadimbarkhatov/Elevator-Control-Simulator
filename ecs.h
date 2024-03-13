@@ -33,7 +33,7 @@ private:
 public slots:
     void onEleRequest(Floor* floor, std::string direction);
     void onFloorSensed(Elevator*, int);
-    void onFloorSelected(Elevator* ele);
+    void onFloorSelected(Elevator* ele, int);
     void onCloseDoors(Elevator*ele, int floorNum);
 
 

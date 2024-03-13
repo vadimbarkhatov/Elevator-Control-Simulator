@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
     setupFloorDisplay();
     setupElevatorDisplay();
 
-
 }
 
 void MainWindow::setupFloorDisplay()

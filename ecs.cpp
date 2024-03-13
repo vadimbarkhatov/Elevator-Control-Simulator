@@ -66,13 +66,6 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
     qInfo() << QString("Got signal that ele arrived at %1").arg(floorNum);
 
 
-    if(ele->floorButtons[floorNum]) {
-        ele->floorButtons[floorNum] = false;
-        emit ele->floorSelect(ele);
-        stopElevator(ele);
-    }
-
-
     if(floors[floorNum]->upButton && ele->state == ele->MovingUp) {
         floors[floorNum]->unselectUp();
         stopElevator(ele);
@@ -89,9 +82,15 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
         stopElevator(ele);
     }
+
+    if(ele->floorButtons[floorNum]) {
+        ele->floorButtons[floorNum] = false;
+        //emit ele->floorSelect(ele);
+        stopElevator(ele);
+    }
 }
 
-void ECS::onFloorSelected(Elevator *ele)
+void ECS::onFloorSelected(Elevator *ele, int floorNum)
 {
 
 }

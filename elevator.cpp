@@ -57,7 +57,7 @@ void Elevator::closeDoors()
 void Elevator::selectFloor(int floorNum)
 {
     floorButtons.replace(floorNum, true);
-    emit floorSelect(this);
+    emit floorSelect(this, floorNum);
 }
 
 bool Elevator::moveToFloor(int floorNum)
