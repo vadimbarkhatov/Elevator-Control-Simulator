@@ -74,7 +74,6 @@ void MainWindow::setupFloorDisplay()
 
         setupFloorDoorDisplay(numElevators, numFloors, floorNum, floor);
 
-
     }
 }
 

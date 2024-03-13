@@ -25,8 +25,11 @@ void Elevator::update()
     }
     else if(state == MovingDown) {
         position -= speed;
+         //qInfo() << QString("Ele at %1").arg(position);
 
-        if(position - std::ceil(position) < speed) {
+         //qInfo() << QString("Diff at %1").arg(std::ceil(position) - position);
+
+        if(std::ceil(position) - position < speed) {
             emit floorSensed(this, static_cast<int>(std::round(position)));
         }
     }

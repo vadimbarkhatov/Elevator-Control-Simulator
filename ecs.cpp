@@ -92,5 +92,7 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
 void ECS::onFloorSelected(Elevator *ele, int floorNum)
 {
-
+    if(ele->state == ele->Idle) {
+        ele->moveToFloor(floorNum);
+    }
 }
