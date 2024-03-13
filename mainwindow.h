@@ -25,10 +25,13 @@ private:
     QVector<QPushButton*> upButtons;
     QVector<QPushButton*> downButtons;
     Elevator* selEle = nullptr;
+    int floorUISize = 50;
 
     void connectToEle(Elevator *ele, Ui::MainWindow* ui);
+    void setupFloorDisplay();
+    void setupFloorDoorDisplay(int, int, int, Floor*);
 private slots:
-    void doSomething();
+    void setupElevatorDisplay();
     void onFloorSelected(int);
 };
 #endif // MAINWINDOW_H

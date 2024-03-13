@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
-
     int numFloors = 7;
     int numElevators = 3;
 
@@ -23,11 +21,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->fireButton, SIGNAL(released()), building, SLOT(simFire()));
     connect(ui->powerButton, SIGNAL(released()), building, SLOT(simPowerOut()));
 
+    setupFloorDisplay();
+    setupElevatorDisplay();
 
 
+}
+
+void MainWindow::setupFloorDisplay()
+{
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
-    int floorUISize = 50;
+
+    int numFloors = building->floors.count();
+    int numElevators = building->elevators.count();
 
     for(int floorNum = 0; floorNum < numFloors; floorNum++) {
         QPushButton* upButton = new QPushButton("▲");
@@ -67,29 +73,34 @@ MainWindow::MainWindow(QWidget *parent)
             this->onFloorSelected(floorNum);
         });
 
+        setupFloorDoorDisplay(numElevators, numFloors, floorNum, floor);
 
-
-        for(int eleNum = 0; eleNum < numElevators; eleNum++) {
-            QLabel* doorLabel = new QLabel("|");
-            doorLabel->setFixedSize(floorUISize,floorUISize);
-            doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
-            doorLabel->setLineWidth(1);
-            doorLabel->setAlignment(Qt::AlignCenter);
-            QFont font = doorLabel->font();
-            font.setPointSize(46);
-            doorLabel->setFont(font);
-            ui->gridLayout->addWidget(doorLabel, numFloors - floorNum - 1, eleNum + 1);
-
-            connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, eleNum](Floor* floor){
-                doorLabel->setText(floor->doors[eleNum] ? "| |" : "|");
-            });
-
-        }
 
     }
+}
 
+void MainWindow::setupFloorDoorDisplay(int numElevators, int numFloors, int floorNum, Floor* floor)
+{
+    for(int eleNum = 0; eleNum < numElevators; eleNum++) {
+        QLabel* doorLabel = new QLabel("|");
+        doorLabel->setFixedSize(floorUISize,floorUISize);
+        doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
+        doorLabel->setLineWidth(1);
+        doorLabel->setAlignment(Qt::AlignCenter);
+        QFont font = doorLabel->font();
+        font.setPointSize(46);
+        doorLabel->setFont(font);
+        ui->gridLayout->addWidget(doorLabel, numFloors - floorNum - 1, eleNum + 1);
 
+        connect(floor, &Floor::doorsChanged, this, [doorLabel, eleNum](Floor* floor){
+            doorLabel->setText(floor->doors[eleNum] ? "| |" : "|");
+        });
 
+    }
+}
+
+void MainWindow::setupElevatorDisplay()
+{
     connectToEle(building->elevators.at(0), ui);
 
     for(Elevator* ele : building->elevators) {
@@ -121,18 +132,8 @@ MainWindow::MainWindow(QWidget *parent)
 
         eleButton->setFixedSize(floorUISize,floorUISize);
     }
-
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
-
-void MainWindow::doSomething()
-{
-    qInfo("Doing something!");
-}
 
 void MainWindow::onFloorSelected(int floorNum)
 {
@@ -180,4 +181,7 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
     onFloorSelected(-1);
 }
 
-
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
