@@ -47,9 +47,7 @@ signals:
 
 public:
     void update();
-//    + selectFloor(int): void
     bool moveToFloor(int);
-//    + openDoors(float): void
 //    + closeDoors(): void
 //    + holdCloseDoor():void
 //    + holdOpenDoor(): void
@@ -61,7 +59,6 @@ public:
 //    + removeDoorObstacle():void
 //    + buildingFire():void
 //    + powerOut():void
-//    + onEleRequest(Floor*, string):void
 //    - emitSound(string):void
 
 

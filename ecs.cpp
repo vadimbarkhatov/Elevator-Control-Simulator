@@ -55,6 +55,7 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
     if(ele->floorButtons[floorNum]) {
         ele->floorButtons[floorNum] = false;
+        emit ele->floorSelect(ele);
         stopElevator(ele);
     }
 

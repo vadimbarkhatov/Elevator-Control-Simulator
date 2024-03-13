@@ -13,43 +13,37 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+
+
     int numFloors = 7;
     int numElevators = 3;
-    int floorUISize = 20;
 
     building = new Building(numFloors, numElevators);
 
-    //connect(ui->pushButton, SIGNAL(released()), this, SLOT(doSomething()));
     connect(ui->fireButton, SIGNAL(released()), building, SLOT(simFire()));
     connect(ui->powerButton, SIGNAL(released()), building, SLOT(simPowerOut()));
 
 
+
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
-
-
-    connectToEle(building->elevators.at(0), ui);
-
-
-
+    int floorUISize = 40;
 
     for(int floorNum = 0; floorNum < numFloors; floorNum++) {
         QPushButton* upButton = new QPushButton("▲");
-        upButton->setFixedSize(floorUISize,floorUISize);
+        upButton->setFixedSize(floorUISize/2,floorUISize/2);
 
         QPushButton* downButton = new QPushButton("▼");
-        downButton->setFixedSize(floorUISize,floorUISize);
+        downButton->setFixedSize(floorUISize/2,floorUISize/2);
 
         QVBoxLayout* qVlayout = new QVBoxLayout();
-
-
         qVlayout->addWidget(upButton);
         qVlayout->addWidget(downButton);
         qVlayout->setSpacing(0);
 
         QWidget* containerWidget = new QWidget();
         containerWidget->setLayout(qVlayout);
-
         ui->gridLayout->addWidget(containerWidget, numFloors - floorNum - 1, 0);
 
         Floor* floor = building->floors.at(floorNum);
@@ -57,13 +51,9 @@ MainWindow::MainWindow(QWidget *parent)
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
 
         QString highlightOn = "QPushButton {color: cyan;}";
-
-
         connect(floor, &Floor::eleRequested, this, [upButton, highlightOn](Floor* floor){
             upButton->setStyleSheet(floor->upButton ? highlightOn : "");
         });
-
-
         connect(floor, &Floor::eleRequested, this, [downButton, highlightOn](Floor* floor){
             downButton->setStyleSheet(floor->downButton ? highlightOn : "");
         });
@@ -77,12 +67,10 @@ MainWindow::MainWindow(QWidget *parent)
         });
 
 
+
         for(int eleNum = 0; eleNum < numElevators; eleNum++) {
-            //QLabel *doorLabel = new QLabel("∥");
-
-
             QLabel* doorLabel = new QLabel("||");
-            doorLabel->setFixedSize(floorUISize*2,floorUISize*2);
+            doorLabel->setFixedSize(floorUISize,floorUISize);
             doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
             doorLabel->setLineWidth(1);
             doorLabel->setAlignment(Qt::AlignCenter);
@@ -99,6 +87,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     }
 
+
+
+    connectToEle(building->elevators.at(0), ui);
+
     for(Elevator* ele : building->elevators) {
         //TODO: fix, why is is it floorSensed?
         connect(ele, &Elevator::floorSensed, this, [this]() {
@@ -113,9 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
                                  "border: 3px solid yellow;"
                                  "background-color: transparent; }"
                                  "QPushButton:hover {"
-                                 "background-color: rgba(255,255, 0, 64); }"
-
-                                 );
+                                 "background-color: rgba(255,255, 0, 64); }");
 
         ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
 
@@ -128,7 +118,7 @@ MainWindow::MainWindow(QWidget *parent)
             ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
         });
 
-        eleButton->setFixedSize(floorUISize * 2,floorUISize * 2);
+        eleButton->setFixedSize(floorUISize,floorUISize);
     }
 
 
