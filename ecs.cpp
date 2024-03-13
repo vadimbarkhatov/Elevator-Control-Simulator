@@ -18,14 +18,9 @@ void ECS::onEleRequest(Floor* floor, std::string direction)
 {
     qInfo() << QString("Elevator request at %1").arg(floor->floorNumber);
 
-    //elevators[1]->moveToFloor(floor->floorNumber);
     if(direction == "down" || direction == "up"){
         for(Elevator* ele : elevators) {
-            //ele->update();
 
-//            if(direction == "up" && ele->MovingUp && ele->getFloorNum() < floor->floorNumber) {
-
-//            }
             if(ele->state == ele->Idle) {
                 ele->moveToFloor(floor->floorNumber);
                 break;
@@ -59,6 +54,7 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
 
     if(ele->floorButtons[floorNum]) {
+        ele->floorButtons[floorNum] = false;
         stopElevator(ele);
     }
 
@@ -72,7 +68,4 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
         stopElevator(ele);
     }
-//    else if() {
-
-//    }
 }

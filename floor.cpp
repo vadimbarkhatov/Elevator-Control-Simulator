@@ -17,16 +17,22 @@ Floor::Floor(int floorNumber, int numDoors, QObject *parent)
 void Floor::pressUp()
 {
     qInfo() << QString("Up Press on floor %1").arg(floorNumber);
-    upButton = !upButton;
-    emit eleRequested(this, "up");
+    if(!upButton) {
+        upButton = true;
+        emit eleRequested(this, "up");
+    }
+
 }
 
 
 void Floor::pressDown()
 {
     qInfo() << QString("Down Press on floor %1").arg(floorNumber);
-    downButton = !downButton;
-    emit eleRequested(this, "down");
+
+    if(!downButton) {
+        downButton = true;
+        emit eleRequested(this, "down");
+    }
 }
 
 void Floor::unselectUp()
