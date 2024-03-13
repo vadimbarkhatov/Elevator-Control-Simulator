@@ -37,8 +37,10 @@ MainWindow::MainWindow(QWidget *parent)
         downButton->setFixedSize(floorUISize/2,floorUISize/2);
 
         QVBoxLayout* qVlayout = new QVBoxLayout();
-        qVlayout->addWidget(upButton);
-        qVlayout->addWidget(downButton);
+        if(floorNum < numFloors - 1)
+            qVlayout->addWidget(upButton);
+        if(floorNum > 0)
+            qVlayout->addWidget(downButton);
         qVlayout->setSpacing(0);
 
         QWidget* containerWidget = new QWidget();

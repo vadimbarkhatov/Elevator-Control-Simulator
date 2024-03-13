@@ -18,8 +18,6 @@ void Elevator::update()
 {
     if(state == MovingUp) {
         position += speed;
-        //qInfo() << QString("Elevator at %1").arg(position);
-        //qInfo() << QString("Difference to lower floor at %1").arg(position - std::floor(position));
 
         if(position - std::floor(position) < speed) {
             emit floorSensed(this, static_cast<int>(std::round(position)));
@@ -85,8 +83,6 @@ int Elevator::getFloorNum()
 
 int Elevator::stop()
 {
-    //state = Idle;
-
     position = std::round(position);
 
     return static_cast<int>(position);

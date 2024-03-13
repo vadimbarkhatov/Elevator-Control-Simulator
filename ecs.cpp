@@ -23,8 +23,17 @@ void ECS::onEleRequest(Floor* floor, std::string direction)
         for(Elevator* ele : elevators) {
 
             if(ele->state == ele->Idle) {
-                //if(ele->floorNumber)
+                if(ele->getFloorNum() == floor->floorNum) {
+                    stopElevator(ele);
+
+                    if(direction == "down")
+                        floor->unselectDown();
+                    else
+                        floor->unselectUp();
+                }
+                else
                     ele->moveToFloor(floor->floorNum);
+
                 break;
             }
         }
@@ -66,12 +75,10 @@ void ECS::onFloorSensed(Elevator* ele, int floorNum)
 
     if(floors[floorNum]->upButton && ele->state == ele->MovingUp) {
         floors[floorNum]->unselectUp();
-
         stopElevator(ele);
     }
     else if(floors[floorNum]->downButton && ele->state == ele->MovingDown) {
         floors[floorNum]->unselectDown();
-
         stopElevator(ele);
     }
     else if(ele->targetFloor == floorNum) {
