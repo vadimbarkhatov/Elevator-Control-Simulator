@@ -34,10 +34,6 @@ void Elevator::update()
     }
 
 
-    if(state == MovingUp || state == MovingDown) {
-        qInfo() << QString("Elevator %1 at %2").arg(eleNum, position);
-    }
-
     if(state == WaitDoorOpen) {
         doorOpenTime -= 0.5;
         if(doorOpenTime <= 0) {
@@ -68,7 +64,8 @@ void Elevator::selectFloor(int floorNum)
 
 bool Elevator::moveToFloor(int floorNum)
 {
-    targetFloor = floorNum;
+    if(targetFloor == -1)
+        targetFloor = floorNum;
 
     if(position < floorNum) {
         state = MovingUp;

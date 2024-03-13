@@ -7,7 +7,6 @@
 #include <string>
 
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -28,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->gridLayout->setSpacing(0);
     ui->gridLayout->setHorizontalSpacing(10);
-    int floorUISize = 40;
+    int floorUISize = 50;
 
     for(int floorNum = 0; floorNum < numFloors; floorNum++) {
         QPushButton* upButton = new QPushButton("▲");
@@ -69,18 +68,18 @@ MainWindow::MainWindow(QWidget *parent)
 
 
         for(int eleNum = 0; eleNum < numElevators; eleNum++) {
-            QLabel* doorLabel = new QLabel("||");
+            QLabel* doorLabel = new QLabel("|");
             doorLabel->setFixedSize(floorUISize,floorUISize);
             doorLabel->setFrameStyle(QFrame::Box |QFrame::Plain);
             doorLabel->setLineWidth(1);
             doorLabel->setAlignment(Qt::AlignCenter);
             QFont font = doorLabel->font();
-            font.setPointSize(36);
+            font.setPointSize(46);
             doorLabel->setFont(font);
             ui->gridLayout->addWidget(doorLabel, numFloors - floorNum - 1, eleNum + 1);
 
             connect(floor, &Floor::doorsChanged, this, [doorLabel, highlightOn, eleNum](Floor* floor){
-                doorLabel->setText(floor->doors[eleNum] ? "| |" : "||");
+                doorLabel->setText(floor->doors[eleNum] ? "| |" : "|");
             });
 
         }
@@ -120,7 +119,6 @@ MainWindow::MainWindow(QWidget *parent)
 
         eleButton->setFixedSize(floorUISize,floorUISize);
     }
-
 
 }
 

@@ -13,7 +13,7 @@ public:
     EleState state = Idle;
 
     float position = 0.0f;
-    int targetFloor = 0;
+    int targetFloor = -1;
     int eleNum = 0;
     QVector<bool> floorButtons;
 //    + targetFloor: int
@@ -48,7 +48,6 @@ signals:
 public:
     void update();
     bool moveToFloor(int);
-//    + closeDoors(): void
 //    + holdCloseDoor():void
 //    + holdOpenDoor(): void
 //    + requestResponse(): void

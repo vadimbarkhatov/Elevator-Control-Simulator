@@ -11,10 +11,9 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
     for(int i = 0; i < numElevators; i++) {
         Elevator* ele = new Elevator(i, numFloors);
         elevators.append(ele);
-        //connect(ele, &Elevator::floorSensed, this, &Building::eleArrived);
         connect(ele, &Elevator::floorSensed, ecs, &ECS::onFloorSensed);
         connect(ele, &Elevator::doorsClosed, ecs, &ECS::onCloseDoors);
-        //connect(ele, &Elevator::doorsClosed, ecs, &ECS::onCloseDoors);
+        connect(ele, &Elevator::floorSelect, ecs, &ECS::onFloorSelected);
     }
 
     ecs->elevators = elevators;

@@ -25,7 +25,7 @@ public slots:
     void pressDown();
 
 public:
-    int floorNumber;
+    int floorNum;
     bool upButton;
     bool downButton;
     QVector<bool> doors;

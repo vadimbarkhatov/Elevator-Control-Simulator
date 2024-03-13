@@ -1,10 +1,10 @@
 #include "floor.h"
 #include <QLoggingCategory>
 
-Floor::Floor(int floorNumber, int numDoors, QObject *parent)
+Floor::Floor(int floorNum, int numDoors, QObject *parent)
     : QObject{parent}, doors(numDoors)
 {
-    this->floorNumber = floorNumber;
+    this->floorNum = floorNum;
     this->upButton = false;
     this->downButton = false;
 
@@ -16,7 +16,7 @@ Floor::Floor(int floorNumber, int numDoors, QObject *parent)
 
 void Floor::pressUp()
 {
-    qInfo() << QString("Up Press on floor %1").arg(floorNumber);
+    qInfo() << QString("Up Press on floor %1").arg(floorNum);
     if(!upButton) {
         upButton = true;
         emit eleRequested(this, "up");
@@ -27,7 +27,7 @@ void Floor::pressUp()
 
 void Floor::pressDown()
 {
-    qInfo() << QString("Down Press on floor %1").arg(floorNumber);
+    qInfo() << QString("Down Press on floor %1").arg(floorNum);
 
     if(!downButton) {
         downButton = true;
