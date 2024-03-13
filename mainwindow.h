@@ -33,5 +33,6 @@ private:
 private slots:
     void setupElevatorDisplay();
     void onFloorSelected(int);
+    void onFloorSensed();
 };
 #endif // MAINWINDOW_H

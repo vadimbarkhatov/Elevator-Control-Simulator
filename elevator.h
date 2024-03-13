@@ -16,7 +16,6 @@ public:
     int targetFloor = -1;
     int eleNum = 0;
     QVector<bool> floorButtons;
-//    + targetFloor: int
 //    + display: string
 //    + floorSensed: signal<void (Elevator*, int)>
 //    + internalFire: signal<void (Elevator*)>
@@ -41,15 +40,18 @@ private:
 signals:
     void floorSensed(Elevator*, int);
     void doorsClosed(Elevator*, int);
-    void floorSelect(Elevator*, int);
+    void floorSelected(Elevator*, int);
     void eleMoved(Elevator*);
 
+
+public slots:
+    void holdCloseDoor();
+    void holdOpenDoor();
 
 public:
     void update();
     bool moveToFloor(int);
-//    + holdCloseDoor():void
-//    + holdOpenDoor(): void
+
 //    + requestResponse(): void
 //    + callHelp(): void
 //    + simOverload(): void

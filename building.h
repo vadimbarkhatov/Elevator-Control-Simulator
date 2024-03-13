@@ -26,7 +26,7 @@ signals:
 public slots:
     void simFire();
     void simPowerOut();
-    void eleArrived(Elevator*, int floorNum);
+    //void eleArrived(Elevator*, int floorNum);
 
 private slots:
     void update();

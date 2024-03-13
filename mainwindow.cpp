@@ -151,23 +151,20 @@ void MainWindow::onFloorSelected(int floorNum)
     }
 }
 
-void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
+void MainWindow::onFloorSensed()
 {
-    if(selEle != nullptr) {
-        disconnect(selEle, &Elevator::floorSensed, this, nullptr);
-    }
-
-    selEle = ele;
-
     QLabel* floorLabel = ui->floorNumLabel;
 
-    auto floorUpdateLambda = [=](){
-        QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
-        floorLabel->setText(floorNumStr);
-    };
+    QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
+    qInfo("does this ever get run?");
+    floorLabel->setText(floorNumStr);
+}
 
-    connect(selEle, &Elevator::floorSensed, this, floorUpdateLambda);
+void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
+{
+    selEle = ele;
 
+    connect(selEle, &Elevator::floorSensed, this, &MainWindow::onFloorSensed);
 
     QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
     ui->floorNumLabel->setText(floorNumStr);
@@ -175,6 +172,12 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
     QLabel* eleLabel = ui->eleNumLabel;
     QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
     eleLabel->setText(eleNumStr);
+
+    QPushButton* openDoorButton = ui->openDoorButton;
+    QPushButton* closeDoorButton = ui->closeDoorButton;
+
+    connect(openDoorButton, &QPushButton::released, selEle, &Elevator::holdOpenDoor);
+    connect(closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);
 
     onFloorSelected(-1);
 }

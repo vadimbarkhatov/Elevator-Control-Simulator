@@ -13,32 +13,22 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
         elevators.append(ele);
         connect(ele, &Elevator::floorSensed, ecs, &ECS::onFloorSensed);
         connect(ele, &Elevator::doorsClosed, ecs, &ECS::onCloseDoors);
-        connect(ele, &Elevator::floorSelect, ecs, &ECS::onFloorSelected);
+        connect(ele, &Elevator::floorSelected, ecs, &ECS::onFloorSelected);
     }
 
     ecs->elevators = elevators;
     ecs->floors = floors;
 
     QTimer *timer = new QTimer(this);
-    timer->setInterval(100);
+    timer->setInterval(500);
     connect(timer, &QTimer::timeout, this, &Building::update);
 
     timer->start();
-
-//    elevators[2]->moveToFloor(2);
-//    elevators[1]->moveToFloor(4);
-//    elevators[0]->moveToFloor(6);
 }
 
 void Building::simFire()
 {
     qInfo("Fire!");
-}
-
-void Building::eleArrived(Elevator*,int floorNum)
-{
-    qInfo("Ele arrived");
-    floors[floorNum]->setDoor(true, 2);
 }
 
 

@@ -59,8 +59,11 @@ void Elevator::closeDoors()
 
 void Elevator::selectFloor(int floorNum)
 {
-    floorButtons.replace(floorNum, true);
-    emit floorSelect(this, floorNum);
+    if(floorNum != getFloorNum()) {
+        floorButtons.replace(floorNum, true);
+        emit floorSelected(this, floorNum);
+    }
+
 }
 
 bool Elevator::moveToFloor(int floorNum)
@@ -76,6 +79,20 @@ bool Elevator::moveToFloor(int floorNum)
     }
 
     return true;
+}
+
+void Elevator::holdCloseDoor()
+{
+    if(state == WaitDoorOpen) {
+        doorOpenTime = 0;
+    }
+}
+
+void Elevator::holdOpenDoor()
+{
+    if(state == WaitDoorOpen) {
+        doorOpenTime = 5;
+    }
 }
 
 int Elevator::getFloorNum()
