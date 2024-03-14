@@ -18,9 +18,11 @@ Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
     srand(42); //fixed seed for testing
 }
 
-
+//how the elevator percieves time
 void Elevator::update()
 {
+
+    //moves the elevator up/down and fires it's floor sensor if it has passed a floor positon
     if(state == MovingUp) {
         position += speed;
 
@@ -30,16 +32,13 @@ void Elevator::update()
     }
     else if(state == MovingDown) {
         position -= speed;
-         //qInfo() << QString("Ele at %1").arg(position);
-
-         //qInfo() << QString("Diff at %1").arg(std::ceil(position) - position);
 
         if(std::ceil(position) - position < speed) {
             emit floorSensed(this, static_cast<int>(std::round(position)));
         }
     }
 
-
+    //counts down door open timer and does a few checks before it actually closes such as weight limit and door obstruction
     if(state == WaitDoorOpen) {
         doorOpenTime -= 1;
         if(doorOpenTime <= 0) {
@@ -64,7 +63,6 @@ void Elevator::update()
 
         }
     }
-
 }
 
 void Elevator::openDoors(float time)
@@ -92,6 +90,7 @@ void Elevator::selectFloor(int floorNum)
 
 }
 
+//sets the target floor if it doesn't already have an original and changes move state
 bool Elevator::moveToFloor(int floorNum)
 {
     if(targetFloor == -1)
@@ -107,26 +106,30 @@ bool Elevator::moveToFloor(int floorNum)
     return true;
 }
 
+//zeroes the door open countdown so door closes immediately on next update
 void Elevator::holdCloseDoor()
 {
     if(state == WaitDoorOpen) {
         doorOpenTime = 0;
     }
-
 }
 
+
+//resets the door open countdown
 void Elevator::holdOpenDoor()
 {
     if(state == WaitDoorOpen) {
-        doorOpenTime = 5;
+        doorOpenTime = Constants::doorOpenTiming;
     }
 }
 
+//as position continous assume the current floor number is the nearest integer
 int Elevator::getFloorNum()
 {
     return static_cast<int>(std::round(position));
 }
 
+//blocks/unblocks the door
 void Elevator::setDoorObstacle(int blockedState)
 {
     if(blockedState == Qt::Checked) {
@@ -139,11 +142,14 @@ void Elevator::setDoorObstacle(int blockedState)
     }
 }
 
+//fires when the help button is pressed is hooked up to safetystem by default
 void Elevator::helpRequest()
 {
     emit helpRequested(this);
 }
 
+
+//when safety system ask for a response, will simulate a response 50% of the time
 bool Elevator::respondToSafety()
 {
     if(rand() % 2 == 0) {
@@ -160,6 +166,7 @@ void Elevator::setLoadWeight(const QString &weight)
 }
 
 
+//when elevator is ordered to stap, snaps it's position to the nearest floor
 int Elevator::stop()
 {
     position = std::round(position);

@@ -10,7 +10,7 @@ SafetySystem::SafetySystem(QObject *parent)
     srand(42); //fixed seed for testing
 }
 
-
+//when safety system recieves a help request from an elevator it checks after 5 seconds if both of them have responded
 void SafetySystem::helpRequest(Elevator* ele)
 {
     qInfo().noquote() << QString("Safety system recieved help request from elevator %1.").arg(ele->eleNum);
@@ -38,6 +38,7 @@ void SafetySystem::call911()
     qInfo().noquote() << QString("Calling 911!");
 }
 
+//simulates that security will respond 50% of the time
 bool SafetySystem::callSecurity()
 {
     if(rand() % 2 == 0) {

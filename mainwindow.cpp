@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    //could be changed for a different number of elevators and floors but it might not be pretty
     int numFloors = 7;
     int numElevators = 3;
 
@@ -29,11 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     setupFloorDisplay();
     setupElevatorDisplay();
 
+    //qInfo is redirected to a global message handler and hooked up to a text edit
     setRedirect(ui->consoleTextEdit);
     qInstallMessageHandler(msgHandler);
 }
 
 
+//sets up the display of the floor up/down buttons and elevator display buttons
 void MainWindow::setupFloorDisplay()
 {
     ui->gridLayout->setSpacing(0);
@@ -60,10 +63,12 @@ void MainWindow::setupFloorDisplay()
         containerWidget->setLayout(qVlayout);
         ui->gridLayout->addWidget(containerWidget, numFloors - floorNum - 1, 0);
 
+        //hooks the up/down display buttons to the floor class
         Floor* floor = building->floors.at(floorNum);
         connect(upButton, SIGNAL(released()), floor, SLOT(pressUp()));
         connect(downButton, SIGNAL(released()), floor, SLOT(pressDown()));
 
+        //makes it so that the up/down arrows are highlited when true
         QString highlightOn = "QPushButton {color: cyan;}";
         connect(floor, &Floor::eleRequested, this, [upButton, highlightOn](Floor* floor){
             upButton->setStyleSheet(floor->upButton ? highlightOn : "");
@@ -85,6 +90,7 @@ void MainWindow::setupFloorDisplay()
     }
 }
 
+//sets up the doors visuals
 void MainWindow::setupFloorDoorDisplay(int numElevators, int numFloors, int floorNum, Floor* floor)
 {
     for(int eleNum = 0; eleNum < numElevators; eleNum++) {
@@ -98,6 +104,7 @@ void MainWindow::setupFloorDoorDisplay(int numElevators, int numFloors, int floo
         doorLabel->setFont(font);
         ui->gridLayout->addWidget(doorLabel, numFloors - floorNum - 1, eleNum + 1);
 
+        //hook to the floor event when doors are opened
         connect(floor, &Floor::doorsChanged, this, [doorLabel, eleNum](Floor* floor){
             doorLabel->setText(floor->doors[eleNum] ? "| |" : "|");
         });
@@ -105,6 +112,7 @@ void MainWindow::setupFloorDoorDisplay(int numElevators, int numFloors, int floo
     }
 }
 
+//sets up the elevator icons
 void MainWindow::setupElevatorDisplay()
 {
     connectEleToPanel(building->elevators.at(0), ui);
@@ -127,6 +135,7 @@ void MainWindow::setupElevatorDisplay()
 
         ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
 
+        //makes is so that when the elevator is selected it's hooked up to to the elevator display
         connect(eleButton, &QPushButton::released, this, [this, ele](){
             this->connectEleToPanel(ele, ui);
         });
@@ -140,7 +149,7 @@ void MainWindow::setupElevatorDisplay()
     }
 }
 
-
+//highlights the elevator floor buttons when pressed
 void MainWindow::onFloorSelected(int floorNum)
 {
     if(floorNum >= 0)
@@ -159,11 +168,13 @@ void MainWindow::onFloorSelected(int floorNum)
     }
 }
 
+//this could've been a lambda probably to update the LCD floor display
 void MainWindow::onFloorSensed()
 {
     ui->eleNumLCD->display(selEle->getFloorNum());
 }
 
+//connects the selected elevator to the elevator display
 void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
 {
     selEle = ele;
@@ -176,7 +187,7 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
     QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
     eleLabel->setText(eleNumStr);
 
-
+    //need to cleanup from the previous elevator
     ui->openDoorButton->disconnect();
     ui->closeDoorButton->disconnect();
     ui->doorObstacleCheck->disconnect();
@@ -195,6 +206,7 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
     ui->eleLoadBox->setValidator(new QIntValidator(0, INT_MAX, ui->eleLoadBox));
     ui->eleLoadBox->setText(QString::number(selEle->loadWeight));
 
+    //make sure the floor buttons are synced to selected elevator
     onFloorSelected(-1);
 }
 

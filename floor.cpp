@@ -14,6 +14,8 @@ Floor::Floor(int floorNum, int numDoors, QObject *parent)
 }
 
 
+
+//press up/down will only select the button and fire an ele request if it isn't already selected
 void Floor::pressUp()
 {
     if(!upButton) {
@@ -34,6 +36,7 @@ void Floor::pressDown()
     }
 }
 
+//the unselect buttons fire a none requested signal so that the highlight display can be cleared
 void Floor::unselectUp()
 {
     upButton = false;
@@ -46,7 +49,7 @@ void Floor::unselectDown()
     emit eleRequested(this, "none");
 }
 
-
+//when doors are changed, lets the display know when they have opened
 void Floor::setDoor(bool state, int doorNum)
 {
     doors[doorNum] = state;

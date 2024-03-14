@@ -9,7 +9,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
     safetySystem = new SafetySystem();
     initFloors(numFloors, numElevators);
 
-
+    //sets up the elevators and hooks them to the ECS/Safety system
     for(int i = 0; i < numElevators; i++) {
         Elevator* ele = new Elevator(i, numFloors);
         elevators.append(ele);
@@ -19,9 +19,11 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
         connect(ele, &Elevator::helpRequested, safetySystem, &SafetySystem::helpRequest);
     }
 
+    //ecs needs to reference the elevators/floors
     ecs->elevators = elevators;
     ecs->floors = floors;
 
+    //runs the update method periodically to simulate pass of time
     QTimer *timer = new QTimer(this);
     timer->setInterval(Constants::refreshInterval);
     connect(timer, &QTimer::timeout, this, &Building::update);
@@ -42,6 +44,7 @@ void Building::simPowerOut()
     qInfo("Power is out.");
 }
 
+//sets up the floors and hooks them to the ECS
 void Building::initFloors(int numFloors, int numElevators)
 {
     for(int i = 0; i < numFloors; i++) {
@@ -52,6 +55,8 @@ void Building::initFloors(int numFloors, int numElevators)
     }
 }
 
+
+//simulates time for the elevators
 void Building::update()
 {
     for(Elevator* ele : elevators)
