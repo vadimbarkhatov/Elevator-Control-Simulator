@@ -2,7 +2,6 @@
 #include <cmath>
 #include <QDebug>
 #include "constants.h"
-#include <safetysystem.h>
 
 
 Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
@@ -131,6 +130,11 @@ void Elevator::setDoorObstacle(int blockedState)
          qInfo("Elevator door unblocked.");
         doorBlocked = false;
     }
+}
+
+void Elevator::helpRequest()
+{
+    emit helpRequested(this);
 }
 
 void Elevator::setLoadWeight(const QString &weight)

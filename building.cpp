@@ -16,6 +16,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
         connect(ele, &Elevator::floorSensed, ecs, &ECS::onFloorSensed);
         connect(ele, &Elevator::doorsClosed, ecs, &ECS::onCloseDoors);
         connect(ele, &Elevator::floorSelected, ecs, &ECS::onFloorSelected);
+        connect(ele, &Elevator::helpRequested, safetySystem, &SafetySystem::helpRequest);
     }
 
     ecs->elevators = elevators;

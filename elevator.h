@@ -2,7 +2,7 @@
 #define ELEVATOR_H
 
 #include <QObject>
-#include <safetysystem.h>
+
 
 class Elevator : public QObject
 {
@@ -28,6 +28,7 @@ signals:
     void floorSensed(Elevator*, int);
     void doorsClosed(Elevator*, int);
     void floorSelected(Elevator*, int);
+    void helpRequested(Elevator*);
     void eleMoved(Elevator*);
 
 
@@ -35,6 +36,7 @@ public slots:
     void holdCloseDoor();
     void holdOpenDoor();
     void setDoorObstacle(int);
+    void helpRequest();
     void setLoadWeight(const QString&);
 
 public:

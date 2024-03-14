@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <elevator.h>
+#include <QDebug>
 
 class SafetySystem : public QObject
 {

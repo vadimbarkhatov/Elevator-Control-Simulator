@@ -115,6 +115,7 @@ void MainWindow::setupElevatorDisplay()
                                  "border: 3px solid yellow;"
                                  "background-color: transparent; }"
                                  "QPushButton:hover {"
+                                 "border: 3px solid orange;"
                                  "background-color: rgba(255,255, 0, 64); }");
 
         ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
@@ -153,9 +154,6 @@ void MainWindow::onFloorSelected(int floorNum)
 
 void MainWindow::onFloorSensed()
 {
-    //QLabel* floorLabel = ui->floorNumLabel;
-
-    //QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
     ui->eleNumLCD->display(selEle->getFloorNum());
 }
 
@@ -165,7 +163,6 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
 
     connect(selEle, &Elevator::floorSensed, this, &MainWindow::onFloorSensed);
 
-    //QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
     ui->eleNumLCD->display(selEle->getFloorNum());
 
     QLabel* eleLabel = ui->eleNumLabel;
@@ -178,13 +175,15 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
     ui->doorObstacleCheck->disconnect();
     ui->eleLoadBox->disconnect();
 
-    ui->eleLoadBox->setValidator(new QIntValidator(0, INT_MAX, ui->eleLoadBox));
-
     connect(ui->openDoorButton, &QPushButton::released, selEle, &Elevator::holdOpenDoor);
     connect(ui->closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);
     connect(ui->doorObstacleCheck, &QCheckBox::stateChanged, selEle, &Elevator::setDoorObstacle);
+    connect(ui->helpButton, &QPushButton::released, selEle, &Elevator::helpRequest);
+
+
     ui->doorObstacleCheck->setChecked(selEle->doorBlocked);
     connect(ui->eleLoadBox, &QLineEdit::textChanged, selEle, &Elevator::setLoadWeight);
+    ui->eleLoadBox->setValidator(new QIntValidator(0, INT_MAX, ui->eleLoadBox));
     ui->eleLoadBox->setText(QString::number(selEle->loadWeight));
 
     onFloorSelected(-1);
