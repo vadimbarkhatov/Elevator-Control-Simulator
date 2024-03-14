@@ -63,86 +63,29 @@
      <rect>
       <x>360</x>
       <y>70</y>
-      <width>242</width>
+      <width>171</width>
       <height>333</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="1" column="1" colspan="2">
-      <widget class="QLabel" name="floorNumLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+     <item row="6" column="2">
+      <widget class="QLineEdit" name="eleLoadBox">
        <property name="text">
-        <string>Floor: </string>
+        <string>0</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="2">
+     <item row="4" column="2">
       <widget class="QPushButton" name="closeDoorButton">
        <property name="text">
         <string>▶|◀</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="1" colspan="2">
+     <item row="7" column="1" colspan="2">
       <widget class="QCheckBox" name="doorObstacleCheck">
        <property name="text">
         <string>Door Obstacle</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QPushButton" name="openDoorButton">
-       <property name="text">
-        <string>◀|▶</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1" colspan="2">
-      <widget class="QPushButton" name="pushButton_6">
-       <property name="text">
-        <string>HELP</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Elevator 
-Load (Max 450kg):</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1" colspan="2">
-      <layout class="QGridLayout" name="eleButtonLayout"/>
-     </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="QLabel" name="displayLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1" colspan="2">
-      <widget class="QLabel" name="eleNumLabel">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Elevator:</string>
        </property>
       </widget>
      </item>
@@ -169,10 +112,57 @@ Load (Max 450kg):</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="2">
-      <widget class="QLineEdit" name="eleLoadBox">
+     <item row="4" column="1">
+      <widget class="QPushButton" name="openDoorButton">
        <property name="text">
-        <string>0</string>
+        <string>◀|▶</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" colspan="2">
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="text">
+        <string>HELP</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Elevator 
+Load (Max 450kg):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <layout class="QGridLayout" name="eleButtonLayout"/>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="QLabel" name="displayLabel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QLCDNumber" name="eleNumLCD">
+       <property name="smallDecimalPoint">
+        <bool>false</bool>
+       </property>
+       <property name="digitCount">
+        <number>2</number>
+       </property>
+       <property name="mode">
+        <enum>QLCDNumber::Dec</enum>
+       </property>
+       <property name="segmentStyle">
+        <enum>QLCDNumber::Filled</enum>
        </property>
       </widget>
      </item>
@@ -205,6 +195,44 @@ Load (Max 450kg):</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="eleNumLabel">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>440</y>
+      <width>240</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Elevator:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="floorNumLabel">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>410</y>
+      <width>240</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="text">
+     <string>Floor: </string>
     </property>
    </widget>
   </widget>

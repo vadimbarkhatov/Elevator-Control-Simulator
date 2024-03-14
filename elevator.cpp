@@ -1,6 +1,7 @@
 #include "elevator.h"
 #include <cmath>
 #include <QDebug>
+#include "constants.h"
 
 
 Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
@@ -36,13 +37,13 @@ void Elevator::update()
 
 
     if(state == WaitDoorOpen) {
-        doorOpenTime -= 0.5;
+        doorOpenTime -= 1;
         if(doorOpenTime <= 0) {
             if(doorBlocked) {
                 qInfo("Could not close door due to obstacle!");
-                doorOpenTime = 5;
+                doorOpenTime = Constants::doorOpenTiming / 3;
                 doorBlockedCounter++;
-                if(doorBlockedCounter == 3) {
+                if(doorBlockedCounter == Constants::doorBlockMax) {
                     qInfo("Elevator could not close doors after multiple attempts. *Displays warning message*");
                     doorBlockedCounter = 0;
                 }
@@ -125,6 +126,11 @@ void Elevator::setDoorObstacle(int blockedState)
          qInfo("Elevator door unblocked.");
         doorBlocked = false;
     }
+}
+
+void Elevator::setLoadWeight(const QString &weight)
+{
+    loadWeight = weight.toInt();
 }
 
 

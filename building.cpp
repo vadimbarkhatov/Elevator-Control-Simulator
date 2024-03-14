@@ -1,5 +1,6 @@
 #include "building.h"
 #include <QTimer>
+#include <constants.h>
 
 Building::Building(int numFloors, int numElevators, QObject *parent)
     : QObject{parent}
@@ -20,7 +21,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
     ecs->floors = floors;
 
     QTimer *timer = new QTimer(this);
-    timer->setInterval(500);
+    timer->setInterval(Constants::refreshInterval);
     connect(timer, &QTimer::timeout, this, &Building::update);
 
     timer->start();

@@ -1,5 +1,6 @@
 #include "ecs.h"
 #include <QDebug>
+#include "constants.h"
 
 ECS::ECS(QObject *parent)
     : QObject{parent}
@@ -10,7 +11,7 @@ ECS::ECS(QObject *parent)
 void ECS::stopElevator(Elevator *ele)
 {
     ele->stop();
-    ele->openDoors(5);
+    ele->openDoors(Constants::doorOpenTiming);
     floors[ele->getFloorNum()]->setDoor(true, ele->eleNum);
     if(ele->targetFloor == ele->getFloorNum()) ele->targetFloor = -1;
 

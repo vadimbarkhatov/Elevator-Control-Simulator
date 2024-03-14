@@ -17,6 +17,7 @@ public:
     int eleNum = 0;
     QVector<bool> floorButtons;
     bool doorBlocked = false;
+    int loadWeight = 0;
 //    + display: string
 //    + floorSensed: signal<void (Elevator*, int)>
 //    + internalFire: signal<void (Elevator*)>
@@ -35,9 +36,10 @@ public:
 //    - loadWeight: float
 
 private:
-    float speed = 0.2f;
+    float speed = 0.2f; //this is a fraction of the distance the elevator will move
     float doorOpenTime = 0.0f;
     int doorBlockedCounter = 0;
+
 
 signals:
     void floorSensed(Elevator*, int);
@@ -50,6 +52,7 @@ public slots:
     void holdCloseDoor();
     void holdOpenDoor();
     void setDoorObstacle(int);
+    void setLoadWeight(const QString&);
 
 public:
     void update();

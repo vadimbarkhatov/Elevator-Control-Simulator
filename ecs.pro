@@ -19,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     building.h \
+    constants.h \
     ecs.h \
     elevator.h \
     floor.h \

@@ -153,10 +153,10 @@ void MainWindow::onFloorSelected(int floorNum)
 
 void MainWindow::onFloorSensed()
 {
-    QLabel* floorLabel = ui->floorNumLabel;
+    //QLabel* floorLabel = ui->floorNumLabel;
 
-    QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
-    floorLabel->setText(floorNumStr);
+    //QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
+    ui->eleNumLCD->display(selEle->getFloorNum());
 }
 
 void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
@@ -165,8 +165,8 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
 
     connect(selEle, &Elevator::floorSensed, this, &MainWindow::onFloorSensed);
 
-    QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
-    ui->floorNumLabel->setText(floorNumStr);
+    //QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
+    ui->eleNumLCD->display(selEle->getFloorNum());
 
     QLabel* eleLabel = ui->eleNumLabel;
     QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
@@ -184,7 +184,8 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
     connect(ui->closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);
     connect(ui->doorObstacleCheck, &QCheckBox::stateChanged, selEle, &Elevator::setDoorObstacle);
     ui->doorObstacleCheck->setChecked(selEle->doorBlocked);
-
+    connect(ui->eleLoadBox, &QLineEdit::textChanged, selEle, &Elevator::setLoadWeight);
+    ui->eleLoadBox->setText(QString::number(selEle->loadWeight));
 
     onFloorSelected(-1);
 }
