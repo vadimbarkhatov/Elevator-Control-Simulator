@@ -72,6 +72,9 @@ void Elevator::openDoors(float time)
     state = WaitDoorOpen;
 
     doorOpenTime = time;
+
+    qInfo().noquote() << QString("Elevator %1 opened it's doors.").arg(eleNum);
+    qInfo("*Bell ring*");
 }
 
 void Elevator::closeDoors()

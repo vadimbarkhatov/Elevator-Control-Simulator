@@ -54,8 +54,7 @@ void ECS::stopElevator(Elevator *ele)
     floors[ele->getFloorNum()]->setDoor(true, ele->eleNum);
     if(ele->targetFloor == ele->getFloorNum()) ele->targetFloor = -1;
 
-    qInfo().noquote() << QString("Elevator %1 opened it's doors.").arg(ele->eleNum);
-    qInfo("*Bell ring*");
+
 }
 
 void ECS::onEleRequest(Floor* floor, std::string direction)
@@ -107,7 +106,7 @@ void ECS::onCloseDoors(Elevator* ele, int floorNum)
 
 void ECS::onFloorSensed(Elevator* ele, int floorNum)
 {
-    qInfo().noquote() << QString("Got signal that elevator %1 arrived at floor %2.").arg(ele->eleNum).arg(floorNum);
+    //qInfo().noquote() << QString("Got signal that elevator %1 arrived at floor %2.").arg(ele->eleNum).arg(floorNum);
 
     if(ele->getFloorNum() == Constants::safeFloor && (state == Fire || state == PowerOut)) {
         stopElevator(ele);

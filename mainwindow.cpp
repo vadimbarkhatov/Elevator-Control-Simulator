@@ -6,6 +6,10 @@
 #include <QLoggingCategory>
 #include <string>
 #include <QIntValidator>
+#include <QtDebug>
+#include <QFile>
+#include <QTextStream>
+#include <logger.h>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -24,7 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupFloorDisplay();
     setupElevatorDisplay();
+
+    setRedirect(ui->consoleTextEdit);
+    qInstallMessageHandler(msgHandler);
 }
+
 
 void MainWindow::setupFloorDisplay()
 {

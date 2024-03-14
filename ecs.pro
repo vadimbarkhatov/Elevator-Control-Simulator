@@ -13,6 +13,7 @@ SOURCES += \
     ecs.cpp \
     elevator.cpp \
     floor.cpp \
+    logger.cpp \
     main.cpp \
     mainwindow.cpp \
     safetysystem.cpp
@@ -23,6 +24,7 @@ HEADERS += \
     ecs.h \
     elevator.h \
     floor.h \
+    logger.h \
     mainwindow.h \
     safetysystem.h
 
