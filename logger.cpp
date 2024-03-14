@@ -2,6 +2,8 @@
 
 QTextEdit* qInfoRedirectTarget = nullptr;
 
+//this is a global class used to redirect qinfo
+
 void msgHandler(QtMsgType msgType, const QMessageLogContext &context, const QString &msg)
 {
     Q_UNUSED(msgType)

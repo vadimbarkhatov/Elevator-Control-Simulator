@@ -21,7 +21,6 @@ public:
     explicit Building(int floors, int elevators, QObject *parent = nullptr);
     QVector<Floor*> floors;
     QVector<Elevator*> elevators;
-    SafetySystem* safetySystem;
 
 signals:
 
@@ -34,7 +33,8 @@ private slots:
 
 private:
     ECS* ecs;
-    void initFloors(int numFloors, int numElevators);
+    void initFloors(int, int);
+    SafetySystem* safetySystem;
 
 
 };

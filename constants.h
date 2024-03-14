@@ -8,7 +8,6 @@ namespace Constants {
     constexpr int doorBlockMax = 3;
     constexpr int maxWeight = 450; //kg
     constexpr int safeFloor = 0;
-
 }
 
 #endif // CONSTANTS_H

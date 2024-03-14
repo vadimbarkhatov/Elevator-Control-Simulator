@@ -29,7 +29,6 @@ signals:
     void doorsClosed(Elevator*, int);
     void floorSelected(Elevator*, int);
     void helpRequested(Elevator*);
-    void eleMoved(Elevator*);
 
 
 public slots:
@@ -43,11 +42,10 @@ public:
     void update();
     bool moveToFloor(int);
     int stop();
-    void openDoors(float time);
+    void openDoors(float);
     void closeDoors();
-    void selectFloor(int floorNum);
+    void selectFloor(int);
     int getFloorNum();
-
     bool respondToSafety();
 signals:
 
