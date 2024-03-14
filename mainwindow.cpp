@@ -24,7 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupFloorDisplay();
     setupElevatorDisplay();
-
 }
 
 void MainWindow::setupFloorDisplay()
@@ -174,6 +173,8 @@ void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
     ui->closeDoorButton->disconnect();
     ui->doorObstacleCheck->disconnect();
     ui->eleLoadBox->disconnect();
+    ui->helpButton->disconnect();
+
 
     connect(ui->openDoorButton, &QPushButton::released, selEle, &Elevator::holdOpenDoor);
     connect(ui->closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);

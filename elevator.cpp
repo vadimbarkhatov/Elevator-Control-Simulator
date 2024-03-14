@@ -2,6 +2,8 @@
 #include <cmath>
 #include <QDebug>
 #include "constants.h"
+#include <cstdlib>
+#include <ctime>
 
 
 Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
@@ -12,6 +14,8 @@ Elevator::Elevator(int eleNum, int numFloors, QObject *parent)
     for(int i = 0; i < numFloors; i++) {
         floorButtons.append(false);
     }
+
+    srand(42); //fixed seed for testing
 }
 
 
@@ -135,6 +139,16 @@ void Elevator::setDoorObstacle(int blockedState)
 void Elevator::helpRequest()
 {
     emit helpRequested(this);
+}
+
+bool Elevator::respondToSafety()
+{
+    if(rand() % 2 == 0) {
+        return true; qInfo("true");
+    }
+    else {
+        return false; qInfo("false");
+    }
 }
 
 void Elevator::setLoadWeight(const QString &weight)

@@ -48,6 +48,7 @@ public:
     void selectFloor(int floorNum);
     int getFloorNum();
 
+    bool respondToSafety();
 signals:
 
 };

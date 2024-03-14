@@ -19,6 +19,7 @@ public slots:
 private:
     float responseTimer = 0.0f;
     void call911();
+    bool callSecurity();
 
 signals:
 

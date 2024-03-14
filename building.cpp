@@ -58,4 +58,6 @@ void Building::update()
     {
         ele->update();
     }
+
+    safetySystem->update();
 }
