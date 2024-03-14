@@ -6,6 +6,7 @@
 #include <floor.h>
 #include <elevator.h>
 #include <ecs.h>
+#include <safetysystem.h>
 
 #include <QMainWindow>
 
@@ -20,19 +21,18 @@ public:
     explicit Building(int floors, int elevators, QObject *parent = nullptr);
     QVector<Floor*> floors;
     QVector<Elevator*> elevators;
+    SafetySystem* safetySystem;
 
 signals:
 
 public slots:
     void simFire();
     void simPowerOut();
-    //void eleArrived(Elevator*, int floorNum);
 
 private slots:
     void update();
 
 private:
-    //Ui::MainWindow *ui;
     ECS* ecs;
     void initFloors(int numFloors, int numElevators);
 

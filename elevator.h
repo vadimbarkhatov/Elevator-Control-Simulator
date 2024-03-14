@@ -2,7 +2,7 @@
 #define ELEVATOR_H
 
 #include <QObject>
-//#include <floor.h>
+#include <safetysystem.h>
 
 class Elevator : public QObject
 {

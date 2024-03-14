@@ -5,3 +5,8 @@ SafetySystem::SafetySystem(QObject *parent)
 {
 
 }
+
+void SafetySystem::helpRequest(Elevator *)
+{
+
+}

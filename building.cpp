@@ -6,6 +6,7 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
     : QObject{parent}
 {
     ecs = new ECS();
+    safetySystem = new SafetySystem();
     initFloors(numFloors, numElevators);
 
 

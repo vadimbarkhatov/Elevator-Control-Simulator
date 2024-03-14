@@ -2,6 +2,7 @@
 #include <cmath>
 #include <QDebug>
 #include "constants.h"
+#include <safetysystem.h>
 
 
 Elevator::Elevator(int eleNum, int numFloors, QObject *parent)

@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    int numFloors = 4;
-    int numElevators = 1;
+    int numFloors = 7;
+    int numElevators = 3;
 
     building = new Building(numFloors, numElevators);
 
