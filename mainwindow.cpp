@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QLoggingCategory>
 #include <string>
+#include <QIntValidator>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -99,10 +100,9 @@ void MainWindow::setupFloorDoorDisplay(int numElevators, int numFloors, int floo
 
 void MainWindow::setupElevatorDisplay()
 {
-    connectToEle(building->elevators.at(0), ui);
+    connectEleToPanel(building->elevators.at(0), ui);
 
     for(Elevator* ele : building->elevators) {
-        //TODO: fix, why is is it floorSensed?
         connect(ele, &Elevator::floorSensed, this, [this]() {
             this->onFloorSelected(-1);
         });
@@ -120,7 +120,7 @@ void MainWindow::setupElevatorDisplay()
         ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
 
         connect(eleButton, &QPushButton::released, this, [this, ele](){
-            this->connectToEle(ele, ui);
+            this->connectEleToPanel(ele, ui);
         });
 
         connect(ele, &Elevator::floorSensed, eleButton, [ele, eleButton, this](){
@@ -142,7 +142,7 @@ void MainWindow::onFloorSelected(int floorNum)
         QString highlightOn = "QPushButton {color: cyan;}";
         QLayoutItem* item = ui->eleButtonLayout->itemAt(i);
         if(item->widget()) {
-           if(selEle->floorButtons.at(i))
+           if(selEle->floorButtons[i])
                item->widget()->setStyleSheet(highlightOn);
            else
                item->widget()->setStyleSheet("");
@@ -156,11 +156,10 @@ void MainWindow::onFloorSensed()
     QLabel* floorLabel = ui->floorNumLabel;
 
     QString floorNumStr = QString("Floor: %1").arg(selEle->getFloorNum());
-    qInfo("does this ever get run?");
     floorLabel->setText(floorNumStr);
 }
 
-void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
+void MainWindow::connectEleToPanel(Elevator* ele, Ui::MainWindow* ui)
 {
     selEle = ele;
 
@@ -173,11 +172,19 @@ void MainWindow::connectToEle(Elevator* ele, Ui::MainWindow* ui)
     QString eleNumStr = QString("Elevator: %1").arg(ele->eleNum);
     eleLabel->setText(eleNumStr);
 
-    QPushButton* openDoorButton = ui->openDoorButton;
-    QPushButton* closeDoorButton = ui->closeDoorButton;
 
-    connect(openDoorButton, &QPushButton::released, selEle, &Elevator::holdOpenDoor);
-    connect(closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);
+    ui->openDoorButton->disconnect();
+    ui->closeDoorButton->disconnect();
+    ui->doorObstacleCheck->disconnect();
+    ui->eleLoadBox->disconnect();
+
+    ui->eleLoadBox->setValidator(new QIntValidator(0, INT_MAX, ui->eleLoadBox));
+
+    connect(ui->openDoorButton, &QPushButton::released, selEle, &Elevator::holdOpenDoor);
+    connect(ui->closeDoorButton, &QPushButton::released, selEle, &Elevator::holdCloseDoor);
+    connect(ui->doorObstacleCheck, &QCheckBox::stateChanged, selEle, &Elevator::setDoorObstacle);
+    ui->doorObstacleCheck->setChecked(selEle->doorBlocked);
+
 
     onFloorSelected(-1);
 }

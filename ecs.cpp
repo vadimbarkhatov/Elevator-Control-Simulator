@@ -13,11 +13,14 @@ void ECS::stopElevator(Elevator *ele)
     ele->openDoors(5);
     floors[ele->getFloorNum()]->setDoor(true, ele->eleNum);
     if(ele->targetFloor == ele->getFloorNum()) ele->targetFloor = -1;
+
+    qInfo().noquote() << QString("Elevator %1 opened it's doors.").arg(ele->eleNum);
+    qInfo("*Bell ring*");
 }
 
 void ECS::onEleRequest(Floor* floor, std::string direction)
 {
-    qInfo() << QString("Elevator request at %1").arg(floor->floorNum);
+    //qInfo().noquote() << QString("Elevator request at %1").arg(floor->floorNum);
 
     if(direction == "down" || direction == "up"){
         for(Elevator* ele : elevators) {
@@ -63,12 +66,13 @@ void ECS::onCloseDoors(Elevator* ele, int floorNum)
 
 void ECS::onFloorSensed(Elevator* ele, int floorNum)
 {
-    qInfo() << QString("Got signal that ele arrived at %1").arg(floorNum);
+    qInfo().noquote() << QString("Got signal that elevator %1 arrived at floor %2").arg(ele->eleNum).arg(floorNum);
 
 
     if(floors[floorNum]->upButton && ele->state == ele->MovingUp) {
         floors[floorNum]->unselectUp();
         stopElevator(ele);
+
     }
     else if(floors[floorNum]->downButton && ele->state == ele->MovingDown) {
         floors[floorNum]->unselectDown();

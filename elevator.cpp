@@ -38,7 +38,21 @@ void Elevator::update()
     if(state == WaitDoorOpen) {
         doorOpenTime -= 0.5;
         if(doorOpenTime <= 0) {
-            closeDoors();
+            if(doorBlocked) {
+                qInfo("Could not close door due to obstacle!");
+                doorOpenTime = 5;
+                doorBlockedCounter++;
+                if(doorBlockedCounter == 3) {
+                    qInfo("Elevator could not close doors after multiple attempts. *Displays warning message*");
+                    doorBlockedCounter = 0;
+                }
+
+
+            }
+            else {
+                doorBlockedCounter = 0;
+                closeDoors();
+            }
         }
     }
 
@@ -86,6 +100,7 @@ void Elevator::holdCloseDoor()
     if(state == WaitDoorOpen) {
         doorOpenTime = 0;
     }
+
 }
 
 void Elevator::holdOpenDoor()
@@ -98,6 +113,18 @@ void Elevator::holdOpenDoor()
 int Elevator::getFloorNum()
 {
     return static_cast<int>(std::round(position));
+}
+
+void Elevator::setDoorObstacle(int blockedState)
+{
+    if(blockedState == Qt::Checked) {
+        qInfo("Elevator door blocked.");
+        doorBlocked = true;
+    }
+    else if(blockedState != Qt::Checked && doorBlocked) {
+         qInfo("Elevator door unblocked.");
+        doorBlocked = false;
+    }
 }
 
 

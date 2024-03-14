@@ -27,7 +27,7 @@ private:
     Elevator* selEle = nullptr;
     int floorUISize = 50;
 
-    void connectToEle(Elevator *ele, Ui::MainWindow* ui);
+    void connectEleToPanel(Elevator *ele, Ui::MainWindow* ui);
     void setupFloorDisplay();
     void setupFloorDoorDisplay(int, int, int, Floor*);
 private slots:

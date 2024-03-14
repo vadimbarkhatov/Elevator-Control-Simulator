@@ -16,7 +16,7 @@ Floor::Floor(int floorNum, int numDoors, QObject *parent)
 
 void Floor::pressUp()
 {
-    qInfo() << QString("Up Press on floor %1").arg(floorNum);
+    qInfo().noquote() << QString("Up Press on floor %1").arg(floorNum);
     if(!upButton) {
         upButton = true;
         emit eleRequested(this, "up");
@@ -27,7 +27,7 @@ void Floor::pressUp()
 
 void Floor::pressDown()
 {
-    qInfo() << QString("Down Press on floor %1").arg(floorNum);
+    qInfo().noquote() << QString("Down Press on floor %1").arg(floorNum);
 
     if(!downButton) {
         downButton = true;

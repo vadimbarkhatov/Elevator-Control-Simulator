@@ -16,6 +16,7 @@ public:
     int targetFloor = -1;
     int eleNum = 0;
     QVector<bool> floorButtons;
+    bool doorBlocked = false;
 //    + display: string
 //    + floorSensed: signal<void (Elevator*, int)>
 //    + internalFire: signal<void (Elevator*)>
@@ -36,6 +37,7 @@ public:
 private:
     float speed = 0.2f;
     float doorOpenTime = 0.0f;
+    int doorBlockedCounter = 0;
 
 signals:
     void floorSensed(Elevator*, int);
@@ -47,6 +49,7 @@ signals:
 public slots:
     void holdCloseDoor();
     void holdOpenDoor();
+    void setDoorObstacle(int);
 
 public:
     void update();
@@ -69,6 +72,8 @@ public:
     void closeDoors();
     void selectFloor(int floorNum);
     int getFloorNum();
+    //void addDoorObstacle();
+    //void removeDoorObstacle();
 signals:
 
 };

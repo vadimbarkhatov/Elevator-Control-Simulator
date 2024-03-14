@@ -44,8 +44,6 @@ void Building::initFloors(int numFloors, int numElevators)
         floors.append(floor);
 
         connect(floor, &Floor::eleRequested, ecs, &ECS::onEleRequest);
-        qInfo("Created floor!");
-
     }
 }
 
