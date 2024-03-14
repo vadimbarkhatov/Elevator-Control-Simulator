@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    int numFloors = 7;
-    int numElevators = 3;
+    int numFloors = 4;
+    int numElevators = 1;
 
     building = new Building(numFloors, numElevators);
 
@@ -109,7 +109,7 @@ void MainWindow::setupElevatorDisplay()
 
 
         QPushButton *eleButton = new QPushButton("");
-
+        eleButton->setFixedSize(floorUISize,floorUISize);
 
         eleButton->setStyleSheet("QPushButton {"
                                  "border: 3px solid yellow;"
@@ -128,7 +128,7 @@ void MainWindow::setupElevatorDisplay()
             ui->gridLayout->addWidget(eleButton, ui->gridLayout->rowCount() - ele->getFloorNum() -1, ele->eleNum + 1);
         });
 
-        eleButton->setFixedSize(floorUISize,floorUISize);
+
     }
 }
 

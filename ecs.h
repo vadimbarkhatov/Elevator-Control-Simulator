@@ -12,23 +12,18 @@ public:
 
 
 public:
-//    - buildingFire: bool
-//    - powerOutage: bool
+    enum ECSState {Clear, Fire, PowerOut};
+    ECSState state = Clear;
     QVector<Elevator*> elevators;
     QVector<Floor*> floors;
 
 public:
-//    + buildingFire(): void
-//    + powerOut(): void
-//    + onEleRequest(Floor*, string): void
-//    + onFloorSensed(Elevator*, int): void
-//    + onOpenDoors(Elevator*): void
-//    + onCloseDoors(Elevator*): void
-//    + onEleFire(Elevator*): void
-//    + onEleOverload(Elevator*): void
-//    + onHelpRequest(Elevator*): void
+      void buildingFire();
+      void powerOut();
+
 private:
     void stopElevator(Elevator *ele);
+    void emergencyProtocol();
 
 public slots:
     void onEleRequest(Floor* floor, std::string direction);

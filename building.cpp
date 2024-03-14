@@ -29,12 +29,14 @@ Building::Building(int numFloors, int numElevators, QObject *parent)
 
 void Building::simFire()
 {
+    ecs->buildingFire();
     qInfo("Fire!");
 }
 
 
 void Building::simPowerOut()
 {
+    ecs->powerOut();
     qInfo("Power is out.");
 }
 

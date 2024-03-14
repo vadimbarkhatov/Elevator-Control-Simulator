@@ -63,7 +63,7 @@
      <rect>
       <x>360</x>
       <y>70</y>
-      <width>171</width>
+      <width>229</width>
       <height>333</height>
      </rect>
     </property>
@@ -79,13 +79,6 @@
       <widget class="QPushButton" name="closeDoorButton">
        <property name="text">
         <string>▶|◀</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1" colspan="2">
-      <widget class="QCheckBox" name="doorObstacleCheck">
-       <property name="text">
-        <string>Door Obstacle</string>
        </property>
       </widget>
      </item>
@@ -128,6 +121,11 @@
      </item>
      <item row="6" column="1">
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Elevator 
 Load (Max 450kg):</string>
@@ -152,6 +150,9 @@ Load (Max 450kg):</string>
      </item>
      <item row="2" column="1" colspan="2">
       <widget class="QLCDNumber" name="eleNumLCD">
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
        <property name="smallDecimalPoint">
         <bool>false</bool>
        </property>
@@ -163,6 +164,16 @@ Load (Max 450kg):</string>
        </property>
        <property name="segmentStyle">
         <enum>QLCDNumber::Filled</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1" colspan="2">
+      <widget class="QCheckBox" name="doorObstacleCheck">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Door Obstacle</string>
        </property>
       </widget>
      </item>
@@ -214,25 +225,6 @@ Load (Max 450kg):</string>
     </property>
     <property name="text">
      <string>Elevator:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="floorNumLabel">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>410</y>
-      <width>240</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="text">
-     <string>Floor: </string>
     </property>
    </widget>
   </widget>

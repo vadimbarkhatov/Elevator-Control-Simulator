@@ -39,21 +39,25 @@ void Elevator::update()
     if(state == WaitDoorOpen) {
         doorOpenTime -= 1;
         if(doorOpenTime <= 0) {
-            if(doorBlocked) {
+
+            if(loadWeight > Constants::maxWeight) {
+                qInfo("Elevator over weight limit. *WARNING! Over max load weight!");
+                doorOpenTime = Constants::doorOpenTiming / 2;
+            }
+            else if(doorBlocked) {
                 qInfo("Could not close door due to obstacle!");
                 doorOpenTime = Constants::doorOpenTiming / 3;
                 doorBlockedCounter++;
                 if(doorBlockedCounter == Constants::doorBlockMax) {
-                    qInfo("Elevator could not close doors after multiple attempts. *Displays warning message*");
+                    qInfo("Elevator could not close doors after multiple attempts. *WARNING! Please clear the doors!*");
                     doorBlockedCounter = 0;
                 }
-
-
             }
             else {
                 doorBlockedCounter = 0;
                 closeDoors();
             }
+
         }
     }
 
