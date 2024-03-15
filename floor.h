@@ -16,9 +16,8 @@ public:
 
 signals:
     void upButtonChanged();
-    void eleRequested(Floor* self, std::string direction);
-    //void eleRequested(Floor* self);
-    void doorsChanged(Floor* self);
+    void eleRequested(Floor*, std::string);
+    void doorsChanged(Floor*);
 
 public slots:
     void pressUp();
@@ -29,11 +28,9 @@ public:
     bool upButton;
     bool downButton;
     QVector<bool> doors;
-    void eleArrived(Elevator*, int floorNum);
 
-
-    void setDoor(bool state, int doorNum);
-
+    void eleArrived(Elevator*, int);
+    void setDoor(bool, int);
     void unselectUp();
     void unselectDown();
 };
